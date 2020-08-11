@@ -1,12 +1,12 @@
 package tensors;
 
-public class DirectedIndexable<T> implements Indexable<T> {
+public class NestedArray<T> implements Indexable<T> {
 
 	protected final int rank;
-	protected final DirectedIndexable<T>[] elements;
+	protected final NestedArray<T>[] elements;
 	public static boolean zeroIndexed = true;
 
-	protected DirectedIndexable(int rank, DirectedIndexable<T>[] elements) {
+	protected NestedArray(int rank, NestedArray<T>[] elements) { // TODO assert validity
 		this.rank = rank;
 		this.elements = elements;
 	}
@@ -45,12 +45,12 @@ public class DirectedIndexable<T> implements Indexable<T> {
 	}
 
 
-	private static class Endpoint<T> extends DirectedIndexable<T> {
+	protected static class Endpoint<T> extends DirectedNestedArray<T> {
 
 		private T contained;
 
 		Endpoint(T contained) {
-			super(0, null);
+			super(0, null, true);
 			this.contained = contained;
 		}
 
@@ -62,6 +62,11 @@ public class DirectedIndexable<T> implements Indexable<T> {
 		@Override
 		protected void setAtIndexHelper(T toSet, int[] index) {
 			contained = toSet;
+		}
+
+		@Override
+		protected void getDirectionsHelper(boolean[] directions) {
+			// Do nothing
 		}
 
 	}
