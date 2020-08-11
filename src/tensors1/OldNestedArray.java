@@ -1,10 +1,10 @@
 package tensors1;
 
-public class NestedArray {
+public class OldNestedArray {
 
 	public final Object[] array;
 
-	public NestedArray(Object[] array) {
+	public OldNestedArray(Object[] array) {
 		this.array = array;
 	}
 
@@ -17,8 +17,8 @@ public class NestedArray {
 		return array;
 	}
 
-	public static NestedArray createFromDimensions(int... dimensions) {
-		return new NestedArray(objectArrayFromDimensions(0, dimensions));
+	public static OldNestedArray createFromDimensions(int... dimensions) {
+		return new OldNestedArray(objectArrayFromDimensions(0, dimensions));
 	}
 
 	private static Object getObjectAtIndexHelper(int loc, Object[] array, int[] index) {

@@ -345,8 +345,8 @@ public class OldTensor extends GeneralFunction {
 		int[] newIxs = new int[newDimensions.length];
 		Arrays.fill(newIxs, 0);
 
-		NestedArray oldElements = new NestedArray(getElementTree());
-		NestedArray newElements = NestedArray.createFromDimensions(newDimensions);
+		OldNestedArray oldElements = new OldNestedArray(getElementTree());
+		OldNestedArray newElements = OldNestedArray.createFromDimensions(newDimensions);
 		boolean flag = true;
 		while (flag) {
 			int[] oldIxs = copyToArraySkipping(newIxs, first, second);
