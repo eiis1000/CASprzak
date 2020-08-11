@@ -5,6 +5,7 @@ public class NestedArray<T> implements Indexable<T> {
 	protected final int rank;
 	protected final NestedArray<T>[] elements;
 	public static boolean zeroIndexed = true;
+	private int[] cachedDimensions = null;
 
 	protected NestedArray(int rank, NestedArray<T>[] elements) { // TODO assert validity
 		this.rank = rank;
@@ -34,8 +35,11 @@ public class NestedArray<T> implements Indexable<T> {
 	}
 
 	public int[] getDimensions() {
+		if (cachedDimensions != null)
+			return cachedDimensions;
 		int[] dimensions = new int[rank];
 		getDimensionsHelper(dimensions);
+		cachedDimensions = dimensions;
 		return dimensions;
 	}
 

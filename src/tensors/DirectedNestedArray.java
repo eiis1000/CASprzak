@@ -4,6 +4,7 @@ public class DirectedNestedArray<T> extends NestedArray<T> {
 
 	protected final boolean isUpper;
 	protected final DirectedNestedArray<T>[] directedElements;
+	private boolean[] cachedDirections = null;
 
 	protected DirectedNestedArray(int rank, DirectedNestedArray<T>[] elements, boolean isUpper) { // TODO assert validity
 		super(rank, elements);
@@ -12,8 +13,11 @@ public class DirectedNestedArray<T> extends NestedArray<T> {
 	}
 
 	public boolean[] getDirections() {
+		if (cachedDirections != null)
+			return cachedDirections;
 		boolean[] directions = new boolean[rank];
 		getDirectionsHelper(directions);
+		cachedDirections = directions;
 		return directions;
 	}
 
