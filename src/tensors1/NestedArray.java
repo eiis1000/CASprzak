@@ -1,4 +1,4 @@
-package tensors;
+package tensors1;
 
 public class NestedArray {
 
