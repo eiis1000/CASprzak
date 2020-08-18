@@ -22,6 +22,10 @@ public interface NestedArrayInterface<I extends NestedArrayInterface<I, T>, T> e
 	NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier,
 										  UnaryOperator<T> endpointModifier);
 
+	default NestedArrayInterface<I, T> modifyWith(UnaryOperator<T> endpointModifier) {
+		return modifyWith(i -> i, endpointModifier);
+	}
+
 	String toString();
 
 }

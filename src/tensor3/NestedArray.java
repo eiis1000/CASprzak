@@ -109,11 +109,15 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier,
 												 UnaryOperator<T> endpointModifier) {
-		return new NestedArray<>(elements.stream()
-				.map(elementModifier)
-				.collect(Collectors.toList()));
+		return new NestedArray<>(
+				elements.stream()
+						.map(e -> (I) e.modifyWith(elementModifier, endpointModifier))
+						.map(elementModifier)
+						.collect(Collectors.toList())
+		);
 	}
 
 

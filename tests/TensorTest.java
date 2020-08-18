@@ -1,6 +1,9 @@
 import functions.GeneralFunction;
 import org.junit.jupiter.api.Test;
 import tensor3.NestedArray;
+import tensor3.NestedArrayInterface;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TensorTest {
 	@Test
@@ -10,6 +13,11 @@ public class TensorTest {
 				{3, 4}
 		});
 		System.out.println(test);
-		System.out.println(test.getAtIndex(1, 1) + test.getRank());
+		assertEquals(2, test.getAtIndex(0, 1));
+		assertEquals(2, test.getRank());
+		test.setAtIndex(-1, 0, 0);
+		assertEquals(-1, test.getAtIndex(0, 0));
+		NestedArrayInterface<?, Integer> test2 = test.modifyWith(i -> -2*i);
+		assertEquals(-4, test2.getAtIndex(0, 1));
 	}
 }
