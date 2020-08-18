@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements NestedArrayInterface<I, T> {
 
-	public static boolean zeroIndexed = true;
+	public static int indexOffset = 0;
 	public static boolean assertValidity = true;
 
 	private final int rank;
@@ -76,7 +76,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	public T getAtIndex(int... index) {
 //		if (index.length != rank) // TODO should this be commented out?
 //			throw new IllegalArgumentException("Length of index array " + index.length + " does not match rank  " + rank + " of tensor during indexing.");
-		return elements.get(index[index.length - rank]).getAtIndex(index);
+		return elements.get(index[index.length - rank] + indexOffset).getAtIndex(index);
 	}
 
 
@@ -84,7 +84,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	public void setAtIndex(T toSet, int... index) {
 //		if (index.length != rank) // TODO should this be commented out?
 //			throw new IllegalArgumentException("Length of index array " + index.length + " does not match rank  " + rank + " of tensor during indexing.");
-		elements.get(index[index.length - rank]).setAtIndex(toSet, index);
+		elements.get(index[index.length - rank] + indexOffset).setAtIndex(toSet, index);
 	}
 
 
