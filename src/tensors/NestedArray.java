@@ -61,15 +61,15 @@ public class NestedArray<T> implements Indexable<T> {
 		elements.get(0).getDimensionsHelper(dimensions);
 	}
 
-	public boolean matches(NestedArray<T> other) {
-		return rank == other.rank && elements.size() == other.elements.size();
+	public boolean matches(NestedArray<T> other, boolean checkIndices) {
+		return rank == other.rank && elements.size() == other.elements.size() && (!checkIndices || indexName.equals(other.indexName));
 	}
 
-	public boolean deepMatches(NestedArray<T> other) {
-		return matches(other) && new Zip<>( // TODO test this with opposite upper/lower
+	public boolean deepMatches(NestedArray<T> other, boolean checkIndices) {
+		return matches(other, checkIndices) && new Zip<>( // TODO test this with opposite upper/lower
 				elements.iterator(),
 				other.elements.iterator(),
-				NestedArray::deepMatches
+				(a, b) -> a.deepMatches(b, checkIndices)
 		).fullReduce(true, (t, r) -> t && r);
 	}
 

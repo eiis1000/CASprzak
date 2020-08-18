@@ -1,9 +1,7 @@
 package tensors;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.IntUnaryOperator;
-import java.util.function.UnaryOperator;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 public class DirectedNestedArray<T> extends NestedArray<T> {
@@ -36,8 +34,8 @@ public class DirectedNestedArray<T> extends NestedArray<T> {
 		directedElements.get(0).getDirectionsHelper(directions);
 	}
 
-	public boolean matches(DirectedNestedArray<T> other) {
-		return super.matches(other) && isUpper == other.isUpper;
+	public boolean matches(DirectedNestedArray<T> other, boolean checkIndices) {
+		return super.matches(other, checkIndices) && isUpper == other.isUpper;
 	}
 
 
@@ -78,7 +76,14 @@ public class DirectedNestedArray<T> extends NestedArray<T> {
 		);
 	}
 
-
+	public static <T> DirectedNestedArray<T> combine(DirectedNestedArray<T> first, DirectedNestedArray<T> second, BinaryOperator<T> combiner) {
+		if (!first.deepMatches(second, true))
+			if (first.deepMatches(second, false))
+				throw new IllegalArgumentException("Indices do not match in DirectedNestedArray combination.");
+			else
+				throw new IllegalArgumentException("Properties do not match in DirectedNestedArray combination.");
+		return null; // TODO finish, maybe make this instance so you can override at Endpoint?
+	}
 
 	
 	
