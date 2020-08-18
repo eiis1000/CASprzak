@@ -20,13 +20,16 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	@SuppressWarnings({"unchecked"})
 	public static <I extends NestedArrayInterface<I, T>, T> NestedArray<I, T> newNestedArray(Object[] elements) {
 		if (elements[0] instanceof Object[])
-			return new NestedArray<>(Arrays.stream(elements)
-					.map(e -> (I) newNestedArray((Object[]) e))
-					.collect(Collectors.toList()));
+			return new NestedArray<>(
+					Arrays.stream(elements)
+							.map(e -> (I) newNestedArray((Object[]) e))
+							.collect(Collectors.toList())
+			);
 		else
-			return new NestedArray<>(Arrays.stream(elements)
-					.map(e -> (I) new NestedArray<I, T>().new Endpoint((T) e))
-					.collect(Collectors.toList())
+			return new NestedArray<>(
+					Arrays.stream(elements)
+							.map(e -> (I) new NestedArray<I, T>().new Endpoint((T) e))
+							.collect(Collectors.toList())
 			);
 	}
 
