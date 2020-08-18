@@ -48,7 +48,7 @@ public class DirectedNestedArray<I extends DirectedNestedArrayInterface<I, T>, T
 
 		@Override
 		public boolean getDirection() {
-			throw new IllegalStateException("Endpoints have no direction.");
+			throw new IllegalStateException("Endpoints have no direction."); // TODO deal with this exception
 		}
 
 		@Override

@@ -1,8 +1,11 @@
 package tensor3;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements NestedArrayInterface<I, T> {
 
@@ -12,6 +15,26 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	private final int rank;
 	protected final List<I> elements;
 	private final int[] dimensions;
+
+
+	@SuppressWarnings({"unchecked"})
+	public static <I extends NestedArrayInterface<I, T>, T> NestedArray<I, T> newNestedArray(Object[] elements) {
+		if (elements[0] instanceof Object[])
+			return new NestedArray<>(Arrays.stream(elements)
+					.map(e -> (I) newNestedArray((Object[]) e))
+					.collect(Collectors.toList()));
+		else
+			return new NestedArray<>(Arrays.stream(elements)
+					.map(e -> (I) new NestedArray<I, T>().new Endpoint((T) e))
+					.collect(Collectors.toList())
+			);
+	}
+
+	private NestedArray() {
+		elements = null;
+		rank = -1;
+		dimensions = null;
+	}
 
 	public NestedArray(List<I> elements) {
 		this.elements = elements;
@@ -85,6 +108,16 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 		return elements;
 	}
 
+
+	public NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier,
+												 UnaryOperator<T> endpointModifier) {
+		return new NestedArray<>(elements.stream()
+				.map(elementModifier)
+				.collect(Collectors.toList()));
+	}
+
+
+
 	public class Endpoint implements NestedArrayInterface<I, T> {
 
 		protected T contained;
@@ -109,6 +142,11 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 		}
 
 		@Override
+		public NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier, UnaryOperator<T> endpointModifier) {
+			return new Endpoint(endpointModifier.apply(contained));
+		}
+
+		@Override
 		public T getAtIndex(int... index) {
 			return contained;
 		}
@@ -122,6 +160,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 		public int[] getDimensions() {
 			return new int[0];
 		}
+
 	}
 
 }

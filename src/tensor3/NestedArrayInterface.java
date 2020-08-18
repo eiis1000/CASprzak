@@ -19,4 +19,7 @@ public interface NestedArrayInterface<I extends NestedArrayInterface<I, T>, T> e
 
 	List<I> getElements();
 
-}
+	NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier,
+										  UnaryOperator<T> endpointModifier);
+
+	}
