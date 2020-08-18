@@ -117,6 +117,11 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	}
 
 
+	public String toString() {
+		return elements.toString();
+	}
+
+
 
 	public class Endpoint implements NestedArrayInterface<I, T> {
 
@@ -159,6 +164,11 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 		@Override
 		public int[] getDimensions() {
 			return new int[0];
+		}
+
+		@Override
+		public String toString() {
+			return contained.toString();
 		}
 
 	}
