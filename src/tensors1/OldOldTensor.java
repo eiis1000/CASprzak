@@ -17,7 +17,7 @@ import java.util.function.Predicate;
 
 import static tools.MiscTools.minimalSimplify;
 
-public class OldTensor extends GeneralFunction {
+public class OldOldTensor extends GeneralFunction {
 
 	public static boolean assertValidity = true;
 	public static boolean zeroIndexed = true;
@@ -25,9 +25,9 @@ public class OldTensor extends GeneralFunction {
 
 
 	public static void main(String[] args) {
-		OldTensor zeroes = new OldTensor("a", true, 1, 7, DefaultFunctions.ZERO);
-		OldTensor vec1 = newVector("b", DefaultFunctions.ONE, DefaultFunctions.ONE);
-		OldTensor bigBoy = newTensor(new int[]{2, 2}, new String[]{"a", "b"}, new boolean[]{true, false},
+		OldOldTensor zeroes = new OldOldTensor("a", true, 1, 7, DefaultFunctions.ZERO);
+		OldOldTensor vec1 = newVector("b", DefaultFunctions.ONE, DefaultFunctions.ONE);
+		OldOldTensor bigBoy = newTensor(new int[]{2, 2}, new String[]{"a", "b"}, new boolean[]{true, false},
 				new Object[][]{
 						{tt("cos(x)"), tt("sin(x)")},
 						{tt("-sin(x)"), tt("cos(x)")}
@@ -44,9 +44,9 @@ public class OldTensor extends GeneralFunction {
 		System.out.println(Arrays.deepToString(bigBoy.getElementTree()));
 		System.out.println(tensorProduct(bigBoy, vec1));
 		System.out.println();
-//		OldTensor traceTest = bigBoy.changeIndex("b", "a"); // TODO this no work because it's not a tensor anymore
+//		OldOldTensor traceTest = bigBoy.changeIndex("b", "a"); // TODO this no work because it's not a tensor anymore
 //		System.out.println(traceTest.executeInternalSums());
-		OldTensor bigger = tensorProduct(vec1, bigBoy);
+		OldOldTensor bigger = tensorProduct(vec1, bigBoy);
 		System.out.println(bigger);
 		System.out.println(bigger.executeInternalSums());
 		System.out.println(tensorProduct(bigBoy, vec1).executeInternalSums());
@@ -62,7 +62,7 @@ public class OldTensor extends GeneralFunction {
 	protected final GeneralFunction[] elements;
 	public final int rank;
 
-	protected OldTensor(String index, boolean isContra, int rank, GeneralFunction... elements) {
+	protected OldOldTensor(String index, boolean isContra, int rank, GeneralFunction... elements) {
 		this.index = index;
 		this.isContra = isContra;
 		this.rank = rank;
@@ -71,7 +71,7 @@ public class OldTensor extends GeneralFunction {
 			assertValid();
 	}
 
-	protected OldTensor(String index, boolean isContra, int rank, int length, GeneralFunction fill) {
+	protected OldOldTensor(String index, boolean isContra, int rank, int length, GeneralFunction fill) {
 		this.index = index;
 		this.isContra = isContra;
 		this.rank = rank;
@@ -84,9 +84,9 @@ public class OldTensor extends GeneralFunction {
 	protected void assertValid() {
 		if (elements.length == 0) {
 			throw new IllegalArgumentException("Tensors cannot have zero length.");
-		} else if (elements[0] instanceof OldTensor) {
+		} else if (elements[0] instanceof OldOldTensor) {
 			for (GeneralFunction function : elements)
-				if (function instanceof OldTensor tensor) {
+				if (function instanceof OldOldTensor tensor) {
 					tensor.assertValid();
 					if (tensor.rank != rank - 1)
 						throw new IllegalArgumentException("Mismatched ranks in tensor construction.");
@@ -96,68 +96,68 @@ public class OldTensor extends GeneralFunction {
 			if (rank != 1)
 				throw new IllegalArgumentException("Mismatched ranks in tensor construction.");
 			for (GeneralFunction function : elements)
-				if (function instanceof OldTensor)
+				if (function instanceof OldOldTensor)
 					throw new IllegalArgumentException("Mismatched tensors and non-tensors in tensor construction.");
 		}
 	}
 
-	public static OldTensor newVector(String index, GeneralFunction... elements) {
-		return new OldTensor(index, true, 1, elements);
+	public static OldOldTensor newVector(String index, GeneralFunction... elements) {
+		return new OldOldTensor(index, true, 1, elements);
 	}
 
-	public static OldTensor newVector(GeneralFunction... elements) {
+	public static OldOldTensor newVector(GeneralFunction... elements) {
 		return newVector(null, elements);
 	}
 
-	public static OldTensor newCovector(String index, GeneralFunction... elements) {
-		return new OldTensor(index, false, 1, elements);
+	public static OldOldTensor newCovector(String index, GeneralFunction... elements) {
+		return new OldOldTensor(index, false, 1, elements);
 	}
 
-	public static OldTensor newCovector(GeneralFunction... elements) {
+	public static OldOldTensor newCovector(GeneralFunction... elements) {
 		return newCovector(null, elements);
 	}
 
-	public static OldTensor newTensor(int[] dimensions, String[] indices, boolean[] contravariants, Object[] elements) {
+	public static OldOldTensor newTensor(int[] dimensions, String[] indices, boolean[] contravariants, Object[] elements) {
 		if (dimensions.length != indices.length || indices.length != contravariants.length)
-			throw new IllegalArgumentException("OldTensor argument arrays do not have matching lengths.");
+			throw new IllegalArgumentException("OldOldTensor argument arrays do not have matching lengths.");
 		return newTensor(0, dimensions, indices, contravariants, elements);
 	}
 
-	private static OldTensor newTensor(int loc, int[] dimensions, String[] indices, boolean[] contravariants, Object[] elements) {
+	private static OldOldTensor newTensor(int loc, int[] dimensions, String[] indices, boolean[] contravariants, Object[] elements) {
 		GeneralFunction[] arr = new GeneralFunction[dimensions[loc]];
 		try {
 			if (loc == dimensions.length - 1) {
 				for (int i = 0; i < arr.length; i++)
 					arr[i] = (GeneralFunction) elements[i];
-				return new OldTensor(indices[loc], contravariants[loc], 1, arr);
+				return new OldOldTensor(indices[loc], contravariants[loc], 1, arr);
 			} else {
 				for (int i = 0; i < arr.length; i++)
 					arr[i] = newTensor(loc + 1, dimensions, indices, contravariants, (Object[]) elements[i]);
-				return new OldTensor(indices[loc], contravariants[loc], ((OldTensor) arr[0]).rank + 1, arr);
+				return new OldOldTensor(indices[loc], contravariants[loc], ((OldOldTensor) arr[0]).rank + 1, arr);
 			}
 		} catch (ClassCastException e) {
 			throw new IllegalArgumentException("Array argument length (rank) does not match nested GeneralFunction array (Object[]) depth.");
 		}
 	}
 
-	public static OldTensor modifyWith(OldTensor seed,
-									   Function<String, String> indexModifier,
-									   Function<Boolean, Boolean> contravarianceModifier,
-									   Function<Integer, Integer> rankModifier,
-									   Function<OldTensor, GeneralFunction> tensorElementModifier,
-									   Function<GeneralFunction, GeneralFunction> functionElementModifier,
-									   boolean simplifyFunctions) { // TODO move the if statement up a level for efficiency
+	public static OldOldTensor modifyWith(OldOldTensor seed,
+										  Function<String, String> indexModifier,
+										  Function<Boolean, Boolean> contravarianceModifier,
+										  Function<Integer, Integer> rankModifier,
+										  Function<OldOldTensor, GeneralFunction> tensorElementModifier,
+										  Function<GeneralFunction, GeneralFunction> functionElementModifier,
+										  boolean simplifyFunctions) { // TODO move the if statement up a level for efficiency
 		if (seed.rank > 1)
-			return new OldTensor(
+			return new OldOldTensor(
 					indexModifier.apply(seed.index),
 					contravarianceModifier.apply(seed.isContra),
 					rankModifier.apply(seed.rank),
 					Arrays.stream(seed.elements)
-							.map(function -> tensorElementModifier.apply((OldTensor) function))
+							.map(function -> tensorElementModifier.apply((OldOldTensor) function))
 							.toArray(GeneralFunction[]::new)
 			);
 		else
-			return new OldTensor(
+			return new OldOldTensor(
 					indexModifier.apply(seed.index),
 					contravarianceModifier.apply(seed.isContra),
 					rankModifier.apply(seed.rank),
@@ -175,7 +175,7 @@ public class OldTensor extends GeneralFunction {
 		int idx = indices.removeFirst();
 		if (indices.isEmpty())
 			return elements[idx];
-		else if (elements[idx] instanceof OldTensor tensor)
+		else if (elements[idx] instanceof OldOldTensor tensor)
 			return tensor.getElementHelper(indices);
 		else
 			throw new IllegalArgumentException("Supplied too more indices than there are nested tensors to index.");
@@ -196,7 +196,7 @@ public class OldTensor extends GeneralFunction {
 
 	private void getIndicesHelper(String[] indexArray) {
 		indexArray[indexArray.length - rank] = index;
-		if (elements[0] instanceof OldTensor tensor)
+		if (elements[0] instanceof OldOldTensor tensor)
 			tensor.getIndicesHelper(indexArray);
 	}
 
@@ -208,7 +208,7 @@ public class OldTensor extends GeneralFunction {
 
 	private void getVariancesHelper(boolean[] variances) {
 		variances[variances.length - rank] = isContra;
-		if (elements[0] instanceof OldTensor tensor)
+		if (elements[0] instanceof OldOldTensor tensor)
 			tensor.getVariancesHelper(variances);
 	}
 
@@ -220,7 +220,7 @@ public class OldTensor extends GeneralFunction {
 
 	private void getDimensionsHelper(int[] dimensions) {
 		dimensions[dimensions.length - rank] = elements.length;
-		if (elements[0] instanceof OldTensor tensor)
+		if (elements[0] instanceof OldOldTensor tensor)
 			tensor.getDimensionsHelper(dimensions);
 	}
 
@@ -234,14 +234,14 @@ public class OldTensor extends GeneralFunction {
 	public Object[] getElementTree() {
 		if (rank > 1)
 			return Arrays.stream(elements)
-					.map(function -> ((OldTensor) function).getElementTree())
+					.map(function -> ((OldOldTensor) function).getElementTree())
 					.toArray();
 		else
 			return elements;
 	}
 
 
-	public OldTensor changeIndex(String from, String to) {
+	public OldOldTensor changeIndex(String from, String to) {
 		return modifyWith(this,
 				i -> i.equals(from) ? to : i,
 				i -> i,
@@ -252,11 +252,11 @@ public class OldTensor extends GeneralFunction {
 	}
 
 
-	public OldTensor scale(GeneralFunction scalar) {
+	public OldOldTensor scale(GeneralFunction scalar) {
 		return scale(scalar, this);
 	}
 
-	public static OldTensor scale(GeneralFunction scalar, OldTensor tensor) {
+	public static OldOldTensor scale(GeneralFunction scalar, OldOldTensor tensor) {
 		return modifyWith(tensor,
 				i -> i,
 				i -> i,
@@ -266,32 +266,32 @@ public class OldTensor extends GeneralFunction {
 				true);
 	}
 
-	public static OldTensor tensorProduct(OldTensor... tensors) {
-		OldTensor tensor = tensors[0];
+	public static OldOldTensor tensorProduct(OldOldTensor... tensors) {
+		OldOldTensor tensor = tensors[0];
 		for (int i = 1; i < tensors.length; i++)
 			tensor = tensorProduct(tensor, tensors[i]);
 		return tensor;
 	}
 
-	private static OldTensor tensorProduct(OldTensor first, OldTensor second) { // TODO check order of resulting indices
+	private static OldOldTensor tensorProduct(OldOldTensor first, OldOldTensor second) { // TODO check order of resulting indices
 		return modifyWith(second,
 				i -> i,
 				i -> i,
 				i -> i + first.rank,
-				i -> OldTensor.tensorProduct(first, i),
+				i -> OldOldTensor.tensorProduct(first, i),
 				first::scale,
 				false);
 	}
 
 
-	public static OldTensor sum(OldTensor... tensors) {
-		OldTensor tensor = tensors[0];
+	public static OldOldTensor sum(OldOldTensor... tensors) {
+		OldOldTensor tensor = tensors[0];
 		for (int i = 1; i < tensors.length; i++)
 			tensor = addTwo(tensor, tensors[i]);
 		return tensor;
 	}
 
-	private static OldTensor addTwo(OldTensor first, OldTensor second) {
+	private static OldOldTensor addTwo(OldOldTensor first, OldOldTensor second) {
 		if (first.isContra != second.isContra)
 			throw new IllegalArgumentException("Mismatched tensor variance in addition.");
 		if (first.rank != second.rank)
@@ -301,21 +301,21 @@ public class OldTensor extends GeneralFunction {
 		else if (first.elements.length != second.elements.length)
 			throw new IllegalArgumentException("Mismatched tensor size in addition.");
 
-		if (first.elements[0] instanceof OldTensor && second.elements[0] instanceof OldTensor) {
+		if (first.elements[0] instanceof OldOldTensor && second.elements[0] instanceof OldOldTensor) {
 			GeneralFunction[] elementSums = new GeneralFunction[first.elements.length];
 			for (int i = 0; i < elementSums.length; i++)
-				elementSums[i] = OldTensor.addTwo((OldTensor) first.elements[i], (OldTensor) second.elements[i]);
-			return new OldTensor(first.index, first.isContra, first.rank, elementSums);
-		} else if (!(first.elements[0] instanceof OldTensor || second.elements[0] instanceof OldTensor)) {
+				elementSums[i] = OldOldTensor.addTwo((OldOldTensor) first.elements[i], (OldOldTensor) second.elements[i]);
+			return new OldOldTensor(first.index, first.isContra, first.rank, elementSums);
+		} else if (!(first.elements[0] instanceof OldOldTensor || second.elements[0] instanceof OldOldTensor)) {
 			GeneralFunction[] elementSums = new GeneralFunction[first.elements.length];
 			for (int i = 0; i < elementSums.length; i++)
 				elementSums[i] = minimalSimplify(new Sum(first.elements[i], second.elements[i]));
-			return new OldTensor(first.index, first.isContra, first.rank, elementSums);
+			return new OldOldTensor(first.index, first.isContra, first.rank, elementSums);
 		} else
 			throw new IllegalArgumentException("Mismatched tensor dimensions in addition.");
 	}
 
-	public OldTensor executeInternalSums() {
+	public OldOldTensor executeInternalSums() {
 		String[] oldIndices = getIndices();
 		Pair<Integer, Integer> repeatedIndex = getRepeatedIndex(oldIndices);
 		if (repeatedIndex == null)
@@ -345,8 +345,8 @@ public class OldTensor extends GeneralFunction {
 		int[] newIxs = new int[newDimensions.length];
 		Arrays.fill(newIxs, 0);
 
-		OldNestedArray oldElements = new OldNestedArray(getElementTree());
-		OldNestedArray newElements = OldNestedArray.createFromDimensions(newDimensions);
+		OldOldNestedArray oldElements = new OldOldNestedArray(getElementTree());
+		OldOldNestedArray newElements = OldOldNestedArray.createFromDimensions(newDimensions);
 		boolean flag = true;
 		while (flag) {
 			int[] oldIxs = copyToArraySkipping(newIxs, first, second);
@@ -359,7 +359,7 @@ public class OldTensor extends GeneralFunction {
 			newElements.setObjectAtIndex(sumArbitrary(toAdd), newIxs);
 			flag = incrementArray(0, newIxs, newDimensions);
 		}
-		return OldTensor.newTensor(
+		return OldOldTensor.newTensor(
 				newDimensions,
 				newIndices,
 				newVariances,
@@ -368,10 +368,10 @@ public class OldTensor extends GeneralFunction {
 	}
 
 	private static GeneralFunction sumArbitrary(GeneralFunction... elements) {
-		if (elements[0] instanceof OldTensor) {
-			OldTensor tensor = (OldTensor) elements[0];
+		if (elements[0] instanceof OldOldTensor) {
+			OldOldTensor tensor = (OldOldTensor) elements[0];
 			for (int i = 1; i < elements.length; i++)
-				tensor = addTwo(tensor, (OldTensor) elements[i]);
+				tensor = addTwo(tensor, (OldOldTensor) elements[i]);
 			return tensor;
 		} else
 			return new Sum(elements);
@@ -408,52 +408,52 @@ public class OldTensor extends GeneralFunction {
 
 	@Override
 	public GeneralFunction clone() {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	public GeneralFunction substituteAll(Predicate<? super GeneralFunction> test, Function<? super GeneralFunction, ? extends GeneralFunction> replacer) {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	public boolean equalsFunction(GeneralFunction that) {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	protected int compareSelf(GeneralFunction that) {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	public int hashCode() {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	public @NotNull Iterator<GeneralFunction> iterator() {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	public GeneralFunction getDerivative(String varID) {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	public double evaluate(Map<String, Double> variableValues) {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	public OutputFunction toOutputFunction() {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 
 	@Override
 	public GeneralFunction simplify() {
-		throw new NotYetImplementedException("Not implemented in OldTensor.");
+		throw new NotYetImplementedException("Not implemented in OldOldTensor.");
 	}
 	
 	public String toString() {

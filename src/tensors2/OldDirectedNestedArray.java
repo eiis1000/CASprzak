@@ -82,7 +82,7 @@ public class OldDirectedNestedArray<T> extends OldNestedArray<T> {
 				throw new IllegalArgumentException("Indices do not match in OldDirectedNestedArray combination.");
 			else
 				throw new IllegalArgumentException("Properties do not match in OldDirectedNestedArray combination.");
-		return null; // TODO finish, maybe make this instance so you can override at Endpoint?
+		return null; // TODO finish, maybe make this instance so you can override at NestedEndpoint?
 	}
 
 	

@@ -133,7 +133,7 @@ public class OldNestedArray<T> implements OldIndexable<T> {
 
 //		@Override
 //		public boolean matches(OldNestedArray<T> other) {
-//			return other instanceof Endpoint<T>;
+//			return other instanceof NestedEndpoint<T>;
 //		}
 
 		@Override
