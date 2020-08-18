@@ -1,6 +1,6 @@
-package tensors;
+package tensors2;
 
-public interface Indexable<T> {
+public interface OldIndexable<T> {
 	T getAtIndex(int... index);
 	void setAtIndex(T toSet, int... index);
 	int[] getDimensions();

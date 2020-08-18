@@ -1,4 +1,4 @@
-package tensors;
+package tensors2;
 
 import java.util.Collections;
 import java.util.List;
@@ -7,21 +7,21 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-public class NestedArray<T> implements Indexable<T> {
+public class OldNestedArray<T> implements OldIndexable<T> {
 
 	protected final int rank;
-	protected final List<? extends NestedArray<T>> elements;
+	protected final List<? extends OldNestedArray<T>> elements;
 	protected String indexName;
 	public static boolean zeroIndexed = true;
 	private int[] cachedDimensions = null;
 
-	protected NestedArray(int rank, List<? extends NestedArray<T>> elements, String indexName) { // TODO assert validity
+	protected OldNestedArray(int rank, List<? extends OldNestedArray<T>> elements, String indexName) { // TODO assert validity
 		this.rank = rank;
 		this.elements = elements;
 		this.indexName = indexName;
 	}
 
-	protected NestedArray(int rank, List<? extends NestedArray<T>> elements) { // TODO assert validity
+	protected OldNestedArray(int rank, List<? extends OldNestedArray<T>> elements) { // TODO assert validity
 		this(rank, elements, null);
 	}
 
@@ -61,12 +61,12 @@ public class NestedArray<T> implements Indexable<T> {
 		elements.get(0).getDimensionsHelper(dimensions);
 	}
 
-	public boolean matches(NestedArray<T> other, boolean checkIndices) {
+	public boolean matches(OldNestedArray<T> other, boolean checkIndices) {
 		return rank == other.rank && elements.size() == other.elements.size() && (!checkIndices || indexName.equals(other.indexName));
 	}
 
-	public boolean deepMatches(NestedArray<T> other, boolean checkIndices) {
-		return matches(other, checkIndices) && new Zip<>( // TODO test this with opposite upper/lower
+	public boolean deepMatches(OldNestedArray<T> other, boolean checkIndices) {
+		return matches(other, checkIndices) && new OldZip<>( // TODO test this with opposite upper/lower
 				elements.iterator(),
 				other.elements.iterator(),
 				(a, b) -> a.deepMatches(b, checkIndices)
@@ -74,11 +74,11 @@ public class NestedArray<T> implements Indexable<T> {
 	}
 
 
-	public NestedArray<T> modifyWith(
+	public OldNestedArray<T> modifyWith(
 			IntUnaryOperator rankModifier,
 			UnaryOperator<String> indexModifier,
-			Function<T, NestedArray<T>> endpointModifier) {
-		return new NestedArray<>(
+			Function<T, OldNestedArray<T>> endpointModifier) {
+		return new OldNestedArray<>(
 				rankModifier.applyAsInt(rank),
 				elements.stream()
 						.map(t -> t.modifyWith(rankModifier, indexModifier, endpointModifier))
@@ -87,18 +87,18 @@ public class NestedArray<T> implements Indexable<T> {
 		);
 	}
 
-	public NestedArray<T> modifyWith(
+	public OldNestedArray<T> modifyWith(
 			IntUnaryOperator rankModifier,
 			UnaryOperator<String> indexModifier,
 			UnaryOperator<T> endpointModifier) {
 		return modifyWith(
 				rankModifier,
 				indexModifier,
-				(Function<T, NestedArray<T>>) (e -> new Endpoint<T>(endpointModifier.apply(e)))
+				(Function<T, OldNestedArray<T>>) (e -> new Endpoint<T>(endpointModifier.apply(e)))
 		);
 	}
 
-	public NestedArray<T> modifyWith(UnaryOperator<T> endpointModifier) {
+	public OldNestedArray<T> modifyWith(UnaryOperator<T> endpointModifier) {
 		return modifyWith(
 				i -> i,
 				i -> i,
@@ -107,7 +107,7 @@ public class NestedArray<T> implements Indexable<T> {
 	}
 
 
-	protected static class Endpoint<T> extends DirectedNestedArray<T> {
+	protected static class Endpoint<T> extends OldDirectedNestedArray<T> {
 
 		private T contained;
 
@@ -132,24 +132,24 @@ public class NestedArray<T> implements Indexable<T> {
 		}
 
 //		@Override
-//		public boolean matches(NestedArray<T> other) {
+//		public boolean matches(OldNestedArray<T> other) {
 //			return other instanceof Endpoint<T>;
 //		}
 
 		@Override
-		public NestedArray<T> modifyWith(
+		public OldNestedArray<T> modifyWith(
 				IntUnaryOperator rankModifier,
 				UnaryOperator<String> indexModifier,
-				Function<T, NestedArray<T>> endpointModifier) {
+				Function<T, OldNestedArray<T>> endpointModifier) {
 			return endpointModifier.apply(contained);
 		}
 
 		@Override
-		public DirectedNestedArray<T> modifyWith(
+		public OldDirectedNestedArray<T> modifyWith(
 				UnaryOperator<Boolean> upperModifier,
 				IntUnaryOperator rankModifier,
 				UnaryOperator<String> indexModifier,
-				Function<T, DirectedNestedArray<T>> endpointModifier) {
+				Function<T, OldDirectedNestedArray<T>> endpointModifier) {
 			return endpointModifier.apply(contained);
 		}
 

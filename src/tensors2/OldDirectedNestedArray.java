@@ -1,22 +1,22 @@
-package tensors;
+package tensors2;
 
 import java.util.List;
 import java.util.function.*;
 import java.util.stream.Collectors;
 
-public class DirectedNestedArray<T> extends NestedArray<T> {
+public class OldDirectedNestedArray<T> extends OldNestedArray<T> {
 
 	public final boolean isUpper;
-	protected final List<? extends DirectedNestedArray<T>> directedElements;
+	protected final List<? extends OldDirectedNestedArray<T>> directedElements;
 	private boolean[] cachedDirections = null;
 
-	protected DirectedNestedArray(boolean isUpper, int rank, List<? extends DirectedNestedArray<T>> elements, String indexName) { // TODO assert validity
+	protected OldDirectedNestedArray(boolean isUpper, int rank, List<? extends OldDirectedNestedArray<T>> elements, String indexName) { // TODO assert validity
 		super(rank, elements, indexName);
 		this.isUpper = isUpper;
 		this.directedElements = elements;
 	}
 
-	protected DirectedNestedArray(boolean isUpper, int rank, List<? extends DirectedNestedArray<T>> elements) {
+	protected OldDirectedNestedArray(boolean isUpper, int rank, List<? extends OldDirectedNestedArray<T>> elements) {
 		this(isUpper, rank, elements, null);
 	}
 
@@ -34,17 +34,17 @@ public class DirectedNestedArray<T> extends NestedArray<T> {
 		directedElements.get(0).getDirectionsHelper(directions);
 	}
 
-	public boolean matches(DirectedNestedArray<T> other, boolean checkIndices) {
+	public boolean matches(OldDirectedNestedArray<T> other, boolean checkIndices) {
 		return super.matches(other, checkIndices) && isUpper == other.isUpper;
 	}
 
 
-	public DirectedNestedArray<T> modifyWith(
+	public OldDirectedNestedArray<T> modifyWith(
 			UnaryOperator<Boolean> upperModifier,
 			IntUnaryOperator rankModifier,
 			UnaryOperator<String> indexModifier,
-			Function<T, DirectedNestedArray<T>> endpointModifier) {
-		return new DirectedNestedArray<>(
+			Function<T, OldDirectedNestedArray<T>> endpointModifier) {
+		return new OldDirectedNestedArray<>(
 				upperModifier.apply(isUpper),
 				rankModifier.applyAsInt(rank),
 				directedElements.stream()
@@ -54,7 +54,7 @@ public class DirectedNestedArray<T> extends NestedArray<T> {
 		);
 	}
 
-	public DirectedNestedArray<T> modifyWith(
+	public OldDirectedNestedArray<T> modifyWith(
 			UnaryOperator<Boolean> upperModifier,
 			IntUnaryOperator rankModifier,
 			UnaryOperator<String> indexModifier,
@@ -63,11 +63,11 @@ public class DirectedNestedArray<T> extends NestedArray<T> {
 				upperModifier,
 				rankModifier,
 				indexModifier,
-				(Function<T, DirectedNestedArray<T>>) (e -> new Endpoint<T>(endpointModifier.apply(e)))
+				(Function<T, OldDirectedNestedArray<T>>) (e -> new Endpoint<T>(endpointModifier.apply(e)))
 		);
 	}
 
-	public DirectedNestedArray<T> modifyWith(UnaryOperator<T> endpointModifier) {
+	public OldDirectedNestedArray<T> modifyWith(UnaryOperator<T> endpointModifier) {
 		return modifyWith(
 				i -> i,
 				i -> i,
@@ -76,12 +76,12 @@ public class DirectedNestedArray<T> extends NestedArray<T> {
 		);
 	}
 
-	public static <T> DirectedNestedArray<T> combine(DirectedNestedArray<T> first, DirectedNestedArray<T> second, BinaryOperator<T> combiner) {
+	public static <T> OldDirectedNestedArray<T> combine(OldDirectedNestedArray<T> first, OldDirectedNestedArray<T> second, BinaryOperator<T> combiner) {
 		if (!first.deepMatches(second, true))
 			if (first.deepMatches(second, false))
-				throw new IllegalArgumentException("Indices do not match in DirectedNestedArray combination.");
+				throw new IllegalArgumentException("Indices do not match in OldDirectedNestedArray combination.");
 			else
-				throw new IllegalArgumentException("Properties do not match in DirectedNestedArray combination.");
+				throw new IllegalArgumentException("Properties do not match in OldDirectedNestedArray combination.");
 		return null; // TODO finish, maybe make this instance so you can override at Endpoint?
 	}
 
