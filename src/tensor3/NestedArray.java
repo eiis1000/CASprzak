@@ -28,7 +28,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 		else
 			return new NestedArray<>(
 					Arrays.stream(elements)
-							.map(e -> (I) new NestedArray<I, T>().new Endpoint((T) e))
+							.map(e -> (I) new Endpoint<>((T) e))
 							.collect(Collectors.toList())
 			);
 	}
@@ -128,56 +128,5 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 		return elements.toString();
 	}
 
-
-
-	public class Endpoint implements NestedArrayInterface<I, T> {
-
-		protected T contained;
-
-		public Endpoint(T contained) {
-			this.contained = contained;
-		}
-
-		@Override
-		public int getRank() {
-			return 0;
-		}
-
-		@Override
-		public boolean matches(NestedArrayInterface<I, T> other) {
-			return other instanceof Endpoint;
-		}
-
-		@Override
-		public List<I> getElements() {
-			return Collections.emptyList();
-		}
-
-		@Override
-		public NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier, UnaryOperator<T> endpointModifier) {
-			return new Endpoint(endpointModifier.apply(contained));
-		}
-
-		@Override
-		public T getAtIndex(int... index) {
-			return contained;
-		}
-
-		@Override
-		public void setAtIndex(T toSet, int... index) {
-			contained = toSet;
-		}
-
-		@Override
-		public int[] getDimensions() {
-			return new int[0];
-		}
-
-		@Override
-		public String toString() {
-			return contained.toString();
-		}
-
-	}
 
 }
