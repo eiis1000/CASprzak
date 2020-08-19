@@ -12,7 +12,7 @@ public interface TensorInterface extends DirectedNestedArrayInterface<TensorInte
 
 	static TensorInterface sum(TensorInterface first, TensorInterface second) {
 		if (first instanceof TensorEndpoint firstEnd && second instanceof TensorEndpoint secondEnd)
-			return new TensorEndpoint(new Sum(firstEnd.contained, secondEnd.contained));
+			return new TensorEndpoint(new Sum(firstEnd.contained, secondEnd.contained).simplify()); // TODO note this simplifies everything
 		else if (!first.deepMatches(second))
 			throw new IllegalArgumentException("Cannot evaluate the sum of non-matching tensors.");
 		else {

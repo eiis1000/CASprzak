@@ -9,12 +9,13 @@ import java.util.stream.Collectors;
 
 public class Tensor extends DirectedNestedArray<TensorInterface, GeneralFunction> implements TensorInterface {
 
+	@SuppressWarnings("unchecked")
 	public static Tensor tensor(DirectedNestedArrayInterface<?, GeneralFunction> directedNestedArray) {
-		if (directedNestedArray.getElements().get(0) instanceof NestedEndpoint)
+		if (directedNestedArray.getElements().get(0) instanceof DirectedEndpoint)
 			return new Tensor(
 					directedNestedArray.getDirection(),
 					directedNestedArray.getElements().stream()
-							.map(e -> (TensorEndpoint) e)
+							.map(e -> (DirectedEndpoint<?, GeneralFunction>) e)
 							.map(e -> new TensorEndpoint(e.contained))
 							.collect(Collectors.toList())
 			);

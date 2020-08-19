@@ -35,12 +35,6 @@ public class TensorTest {
 		System.out.println(test);
 		assertEquals(2, test.getAtIndex(0, 1));
 		assertTrue(test.getDirection());
-		DirectedNestedArray<?, Integer> test2 = DirectedNestedArray.direct(NestedArray.nest(
-				new Object[][]{
-						{1, 2},
-						{3, 4}
-				}), new boolean[]{true, false});
-//		assertEquals(test, test2);
 	}
 
 	@Test
@@ -54,5 +48,14 @@ public class TensorTest {
 		System.out.println(test);
 		assertEquals(TWO, test.getAtIndex(0, 1));
 		assertTrue(test.getDirection());
+		DirectedNestedArray<?, GeneralFunction> test2d = DirectedNestedArray.direct(NestedArray.nest(
+				new Object[][]{
+						{ONE, ONE},
+						{ONE, TWO}
+				}), new boolean[]{true, false});
+		Tensor test2 = Tensor.tensor(test2d);
+		TensorInterface sum = TensorInterface.sum(test, test2);
+		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
+		System.out.println(sum);
 	}
 }
