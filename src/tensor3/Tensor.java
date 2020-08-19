@@ -28,11 +28,11 @@ public class Tensor extends DirectedNestedArray<TensorInterface, GeneralFunction
 			);
 	}
 
-	public static Tensor tensor(NestedArrayInterface<?, GeneralFunction> nestedArray, boolean[] directions) {
+	public static Tensor tensor(NestedArrayInterface<?, GeneralFunction> nestedArray, boolean... directions) {
 		return tensor(direct(nestedArray, directions));
 	}
 
-	public static Tensor tensor(Object[] elements, boolean[] directions) {
+	public static Tensor tensor(Object[] elements, boolean... directions) {
 		return tensor(direct(nest(elements), directions));
 	}
 

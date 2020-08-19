@@ -9,7 +9,7 @@ public class DirectedNestedArray<I extends DirectedNestedArrayInterface<I, T>, T
 	private final boolean[] directions;
 
 	@SuppressWarnings({"unchecked"})
-	public static <I extends DirectedNestedArrayInterface<I, T>, T> DirectedNestedArray<I, T> direct(NestedArrayInterface<?, T> nestedArray, boolean[] directions) {
+	public static <I extends DirectedNestedArrayInterface<I, T>, T> DirectedNestedArray<I, T> direct(NestedArrayInterface<?, T> nestedArray, boolean... directions) {
 		if (nestedArray.getElements().get(0) instanceof NestedEndpoint)
 			return new DirectedNestedArray<>(
 					directions[directions.length - nestedArray.getRank()],
@@ -27,7 +27,7 @@ public class DirectedNestedArray<I extends DirectedNestedArrayInterface<I, T>, T
 			);
 	}
 
-	public static <I extends DirectedNestedArrayInterface<I, T>, T> DirectedNestedArray<I, T> direct(Object[] elements, boolean[] directions) {
+	public static <I extends DirectedNestedArrayInterface<I, T>, T> DirectedNestedArray<I, T> direct(Object[] elements, boolean... directions) {
 		return direct(nest(elements), directions);
 	}
 
