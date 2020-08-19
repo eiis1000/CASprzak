@@ -30,11 +30,11 @@ public interface NestedArrayInterface<I extends NestedArrayInterface<I, T>, T> e
 	String toString();
 
 
-	class Endpoint<I extends NestedArrayInterface<I, T>, T> implements NestedArrayInterface<I, T> {
+	class NestedEndpoint<I extends NestedArrayInterface<I, T>, T> implements NestedArrayInterface<I, T> {
 
 		protected T contained;
 
-		public Endpoint(T contained) {
+		public NestedEndpoint(T contained) {
 			this.contained = contained;
 		}
 
@@ -45,7 +45,7 @@ public interface NestedArrayInterface<I extends NestedArrayInterface<I, T>, T> e
 
 		@Override
 		public boolean matches(NestedArrayInterface<I, T> other) {
-			return other instanceof NestedArray.Endpoint;
+			return other instanceof NestedEndpoint;
 		}
 
 		@Override
@@ -55,7 +55,7 @@ public interface NestedArrayInterface<I extends NestedArrayInterface<I, T>, T> e
 
 		@Override
 		public NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier, UnaryOperator<T> endpointModifier) {
-			return new Endpoint<>(endpointModifier.apply(contained));
+			return new NestedEndpoint<>(endpointModifier.apply(contained));
 		}
 
 		@Override

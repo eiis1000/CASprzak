@@ -1,7 +1,6 @@
 package tensor3;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -18,28 +17,22 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 
 
 	@SuppressWarnings({"unchecked"})
-	public static <I extends NestedArrayInterface<I, T>, T> NestedArray<I, T> newNestedArray(Object[] elements) {
+	public static <I extends NestedArrayInterface<I, T>, T> NestedArray<I, T> nest(Object[] elements) {
 		if (elements[0] instanceof Object[])
 			return new NestedArray<>(
 					Arrays.stream(elements)
-							.map(e -> (I) newNestedArray((Object[]) e))
+							.map(e -> (I) nest((Object[]) e))
 							.collect(Collectors.toList())
 			);
 		else
 			return new NestedArray<>(
 					Arrays.stream(elements)
-							.map(e -> (I) new Endpoint<>((T) e))
+							.map(e -> (I) new NestedEndpoint<>((T) e))
 							.collect(Collectors.toList())
 			);
 	}
 
-	private NestedArray() {
-		elements = null;
-		rank = -1;
-		dimensions = null;
-	}
-
-	public NestedArray(List<I> elements) {
+	protected NestedArray(List<I> elements) {
 		this.elements = elements;
 		if (assertValidity)
 			assertValidity();

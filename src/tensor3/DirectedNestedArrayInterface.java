@@ -9,15 +9,15 @@ public interface DirectedNestedArrayInterface<I extends DirectedNestedArrayInter
 	boolean[] getDirections();
 
 
-	class Endpoint<I extends DirectedNestedArrayInterface<I, T>, T> extends NestedArrayInterface.Endpoint<I, T> implements DirectedNestedArrayInterface<I, T> {
+	class DirectedEndpoint<I extends DirectedNestedArrayInterface<I, T>, T> extends NestedEndpoint<I, T> implements DirectedNestedArrayInterface<I, T> {
 
-		public Endpoint(T contained) {
+		public DirectedEndpoint(T contained) {
 			super(contained);
 		}
 
 		@Override
 		public boolean matches(DirectedNestedArrayInterface<I, T> other) {
-			return other instanceof DirectedNestedArrayInterface.Endpoint;
+			return other instanceof DirectedEndpoint;
 		}
 
 		@Override
