@@ -3,6 +3,7 @@ import functions.commutative.Product;
 import functions.endpoint.Constant;
 import org.junit.jupiter.api.Test;
 import tensor3.*;
+import tensor3.Tensor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -43,8 +44,8 @@ public class TensorTest {
 				new Object[][]{
 						{ONE, TWO},
 						{new Constant(3), new Product(TWO, E)}
-				}, new boolean[]{true, false}
-		);
+				},
+				true, false);
 		System.out.println(test);
 		assertEquals(TWO, test.getAtIndex(0, 1));
 		assertTrue(test.getDirection());
@@ -54,7 +55,7 @@ public class TensorTest {
 						{ONE, TWO}
 				}), new boolean[]{true, false});
 		Tensor test2 = Tensor.tensor(test2d);
-		TensorInterface sum = TensorInterface.sum(test, test2);
+		TensorInterface sum = Tensor.sum(test, test2);
 		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
 		System.out.println(sum);
 	}

@@ -1,6 +1,7 @@
 package tensor3;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -122,4 +123,53 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	}
 
 
+	public static class NestedEndpoint<I extends NestedArrayInterface<I, T>, T> implements NestedArrayInterface<I, T> {
+
+		protected T contained;
+
+		public NestedEndpoint(T contained) {
+			this.contained = contained;
+		}
+
+		@Override
+		public int getRank() {
+			return 0;
+		}
+
+		@Override
+		public boolean matches(NestedArrayInterface<I, T> other) {
+			return other instanceof NestedEndpoint;
+		}
+
+		@Override
+		public List<I> getElements() {
+			return Collections.emptyList();
+		}
+
+		@Override
+		public NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier, UnaryOperator<T> endpointModifier) {
+			return new NestedEndpoint<>(endpointModifier.apply(contained));
+		}
+
+		@Override
+		public T getAtIndex(int... index) {
+			return contained;
+		}
+
+		@Override
+		public void setAtIndex(T toSet, int... index) {
+			contained = toSet;
+		}
+
+		@Override
+		public int[] getDimensions() {
+			return new int[0];
+		}
+
+		@Override
+		public String toString() {
+			return contained.toString();
+		}
+
+	}
 }
