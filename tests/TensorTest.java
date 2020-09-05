@@ -130,7 +130,7 @@ public class TensorTest {
 
 	@Test
 	void christoffel() {
-		Space space = null;
+		Space space = DefaultSpaces.s2;
 		DirectedNestedArrayInterface<?, GeneralFunction> christoffelSymbols = createFrom(
 				List.of("\\mu", "\\sigma", "\\nu"),
 				new boolean[]{false, true, false},
