@@ -1,4 +1,4 @@
-package tensor3;
+package tensors3;
 
 public interface DirectedNestedArrayInterface<I extends DirectedNestedArrayInterface<I, T>, T> extends NestedArrayInterface<I, T> {
 

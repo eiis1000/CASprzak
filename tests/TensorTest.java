@@ -2,8 +2,8 @@ import functions.GeneralFunction;
 import functions.commutative.Product;
 import functions.endpoint.Constant;
 import org.junit.jupiter.api.Test;
-import tensor3.*;
-import tensor3.Tensor;
+import tensors3.*;
+import tensors3.Tensor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

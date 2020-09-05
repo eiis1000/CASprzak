@@ -1,6 +1,5 @@
-package tensor3;
+package tensors3;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.function.UnaryOperator;
 

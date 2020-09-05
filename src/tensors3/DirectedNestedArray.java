@@ -1,4 +1,4 @@
-package tensor3;
+package tensors3;
 
 import java.util.List;
 import java.util.stream.Collectors;

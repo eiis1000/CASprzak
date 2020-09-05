@@ -1,4 +1,4 @@
-package tensor3;
+package tensors3;
 
 import functions.GeneralFunction;
 import functions.commutative.Sum;

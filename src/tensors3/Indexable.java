@@ -1,4 +1,4 @@
-package tensor3;
+package tensors3;
 
 public interface Indexable<T> {
 	T getAtIndex(int... index);

@@ -1,4 +1,4 @@
-package tensor3;
+package tensors3;
 
 import java.util.Iterator;
 import java.util.function.BiFunction;
