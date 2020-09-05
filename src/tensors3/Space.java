@@ -16,15 +16,15 @@ public class Space {
 	public final Tensor inverseMetric;
 	public DirectedNestedArray<?, GeneralFunction> christoffelConnection; // TODO make in constructor & final
 
-	public Space(int dimension, Tensor metric, Tensor inverseMetric, String... variableStrings) {
+	public Space(String[] variableStrings, Tensor metric, Tensor inverseMetric) {
 		this.variableStrings = variableStrings;
-		this.dimension = dimension;
+		this.dimension = variableStrings.length;
 		this.metric = metric;
 		this.inverseMetric = inverseMetric;
 	}
 
-	public Space(int dimension, String... variableStrings) {
-		this(dimension, null, null, variableStrings); // TODO this is null, fix that
+	public Space(String... variableStrings) {
+		this(variableStrings, null, null); // TODO this is null, fix that
 	}
 
 	public Partial partial(String index, ElementAccessor operand) {
