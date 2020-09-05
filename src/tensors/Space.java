@@ -5,6 +5,8 @@ import functions.commutative.Sum;
 import functions.endpoint.Constant;
 import functions.unitary.transforms.PartialDerivative;
 import tensors.elementoperations.ElementAccessor;
+import tensors.elementoperations.ElementProduct;
+import tools.exceptions.NotYetImplementedException;
 
 import java.util.*;
 
@@ -47,6 +49,16 @@ public class Space {
 				)
 		);
 	}
+
+	private Tensor covariantDerivative(String respectTo, Tensor tensor, String... tensorIndices) {
+		// TODO assert tensorIndices length matches rank
+		ElementAccessor[] toAdd = new ElementAccessor[tensor.getRank() + 1];
+		for (int i = 0; i < tensor.getRank(); i++) {
+//			ElementAccessor term = new ElementProduct(christoffel) TODO you need to be able to index christoffel
+		}
+		return null;
+	}
+
 
 	public class Partial implements ElementAccessor {
 
