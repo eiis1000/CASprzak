@@ -38,7 +38,7 @@ public class TensorTools {
 		return false;
 	}
 
-	public static ElementWrapper indexTensor(DirectedNestedArray<?, GeneralFunction> toAccess, String... indices) {
+	public static ElementWrapper indexTensor(DirectedNestedArrayInterface<?, GeneralFunction> toAccess, String... indices) {
 		return new ElementWrapper(toAccess, indices);
 	}
 

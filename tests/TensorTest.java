@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 import tensors3.*;
 import tensors3.Tensor;
 import tensors3.elementoperations.ElementProduct;
-import tensors3.TensorTools;
 import tensors3.elementoperations.ElementWrapper;
-import tools.DefaultFunctions;
 
 import java.util.List;
 
@@ -131,20 +129,6 @@ public class TensorTest {
 	@Test
 	void christoffel() {
 		Space space = DefaultSpaces.s2;
-		DirectedNestedArrayInterface<?, GeneralFunction> christoffelSymbols = createFrom(
-				List.of("\\mu", "\\sigma", "\\nu"),
-				new boolean[]{false, true, false},
-				2,
-				product(
-						wrap(HALF),
-						space.inverseMetric.index("\\sigma", "\\rho"),
-						sum(
-								space.partial("\\mu", space.metric.index("\\nu", "\\rho")),
-								space.partial("\\nu", space.metric.index("\\rho", "\\mu")),
-								negative(space.partial("\\rho", space.metric.index("\\mu", "\\nu")))
-						)
-					)
-		);
-		System.out.println(christoffelSymbols);
+		System.out.println(space.christoffel);
 	}
 }

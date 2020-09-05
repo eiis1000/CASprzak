@@ -8,27 +8,44 @@ import tensors3.elementoperations.ElementAccessor;
 
 import java.util.*;
 
+import static tensors3.TensorTools.*;
+import static tools.DefaultFunctions.HALF;
+
 public class Space {
 
 	protected final String[] variableStrings;
 	public final int dimension;
-	public final Tensor metric;
-	public final Tensor inverseMetric;
-	public DirectedNestedArray<?, GeneralFunction> christoffelConnection; // TODO make in constructor & final
+	public final TensorInterface metric;
+	public final TensorInterface inverseMetric;
+	public final DirectedNestedArrayInterface<?, GeneralFunction> christoffel;
 
-	public Space(String[] variableStrings, Tensor metric, Tensor inverseMetric) {
+	public Space(String[] variableStrings, TensorInterface metric, TensorInterface inverseMetric) {
 		this.variableStrings = variableStrings;
 		this.dimension = variableStrings.length;
 		this.metric = metric;
 		this.inverseMetric = inverseMetric;
-	}
-
-	public Space(String... variableStrings) {
-		this(variableStrings, null, null); // TODO this is null, fix that
+		christoffel = calculateChristoffel();
 	}
 
 	public Partial partial(String index, ElementAccessor operand) {
 		return new Partial(index, operand);
+	}
+
+	private DirectedNestedArrayInterface<?, GeneralFunction> calculateChristoffel() {
+		return createFrom(
+				List.of("\\mu", "\\sigma", "\\nu"),
+				new boolean[]{false, true, false},
+				2,
+				product(
+						wrap(HALF),
+						inverseMetric.index("\\sigma", "\\rho"),
+						sum(
+								partial("\\mu", metric.index("\\nu", "\\rho")),
+								partial("\\nu", metric.index("\\rho", "\\mu")),
+								negative(partial("\\rho", metric.index("\\mu", "\\nu")))
+						)
+				)
+		);
 	}
 
 	public class Partial implements ElementAccessor {

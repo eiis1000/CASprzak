@@ -47,10 +47,6 @@ public class Tensor extends DirectedNestedArray<TensorInterface, GeneralFunction
 		throw new UnsupportedOperationException("Tensors are final, and their elements should never be changed.");
 	}
 
-	public ElementWrapper index(String... indices) {
-		return TensorTools.indexTensor(this, indices);
-	}
-
 
 	public static class TensorEndpoint extends DirectedEndpoint<TensorInterface, GeneralFunction> implements TensorInterface {
 		public TensorEndpoint(GeneralFunction contained) {
