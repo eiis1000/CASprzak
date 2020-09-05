@@ -3,7 +3,7 @@ import functions.commutative.Product;
 import functions.endpoint.Constant;
 import org.junit.jupiter.api.Test;
 import tensors3.*;
-import tensors3.Tensor;
+import tensors3.ArrayTensor;
 import tensors3.elementoperations.ElementProduct;
 import tensors3.elementoperations.ElementWrapper;
 
@@ -26,13 +26,13 @@ public class TensorTest {
 		assertEquals(2, test.getRank());
 		test.setAtIndex(-1, 0, 0);
 		assertEquals(-1, test.getAtIndex(0, 0));
-		NestedArrayInterface<?, Integer> test2 = test.modifyWith(i -> -2 * i);
+		Nested<?, Integer> test2 = test.modifyWith(i -> -2 * i);
 		assertEquals(-4, test2.getAtIndex(0, 1));
 	}
 
 	@Test
 	void directedTest() {
-		DirectedNestedArrayInterface<?, Integer> test = DirectedNestedArray.direct(
+		DirectedNested<?, Integer> test = DirectedNestedArray.direct(
 				new Object[][]{
 						{1, 2},
 						{3, 4}
@@ -45,7 +45,7 @@ public class TensorTest {
 
 	@Test
 	void tensorTest() {
-		TensorInterface test = Tensor.tensor(
+		TensorInterface test = ArrayTensor.tensor(
 				new Object[][]{
 						{ONE, TWO},
 						{new Constant(3), new Product(TWO, E)}
@@ -54,27 +54,27 @@ public class TensorTest {
 		System.out.println(test);
 		assertEquals(TWO, test.getAtIndex(0, 1));
 		assertTrue(test.getDirection());
-		DirectedNestedArrayInterface<?, GeneralFunction> test2d = DirectedNestedArray.direct(NestedArray.nest(
+		DirectedNested<?, GeneralFunction> test2d = DirectedNestedArray.direct(NestedArray.nest(
 				new Object[][]{
 						{ONE, ONE},
 						{ONE, TWO}
 				}), new boolean[]{true, false});
-		TensorInterface test2 = Tensor.tensor(test2d);
-//		TensorInterface sum = Tensor.sum(test, test2);
+		TensorInterface test2 = ArrayTensor.tensor(test2d);
+//		TensorInterface sum = ArrayTensor.sum(test, test2);
 //		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
 //		System.out.println(sum);
 	}
 
 	@Test
 	void elementTest() {
-		TensorInterface id2u = Tensor.tensor(
+		TensorInterface id2u = ArrayTensor.tensor(
 				new Object[][]{
 						{ZERO, ONE},
 						{ONE, ZERO}
 				},
 				false, false
 		);
-		TensorInterface id2d = Tensor.tensor(
+		TensorInterface id2d = ArrayTensor.tensor(
 				new Object[][]{
 						{ZERO, ONE},
 						{ONE, ZERO}
@@ -88,14 +88,14 @@ public class TensorTest {
 
 	@Test
 	void scalarTest1() {
-		TensorInterface C = Tensor.tensor(
+		TensorInterface C = ArrayTensor.tensor(
 				new Object[]{
 						ONE,
 						TWO
 				},
 				true
 		);
-		TensorInterface R = Tensor.tensor(
+		TensorInterface R = ArrayTensor.tensor(
 				new Object[]{
 						TEN, ONE
 				},
@@ -108,13 +108,13 @@ public class TensorTest {
 
 	@Test
 	void scalarTest2() {
-		TensorInterface C = Tensor.tensor(
+		TensorInterface C = ArrayTensor.tensor(
 				new Object[]{
 						TEN, ONE
 				},
 				true
 		);
-		TensorInterface metric = Tensor.tensor(
+		TensorInterface metric = ArrayTensor.tensor(
 				new Object[][]{
 						{NEGATIVE_ONE, ZERO},
 						{ZERO, ONE}

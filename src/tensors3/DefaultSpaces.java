@@ -1,11 +1,9 @@
 package tensors3;
 
-import functions.GeneralFunction;
-import functions.commutative.Product;
 import functions.endpoint.Variable;
 import functions.unitary.trig.normal.Sin;
 
-import static tensors3.Tensor.*;
+import static tensors3.ArrayTensor.*;
 import static tools.DefaultFunctions.*;
 import static tools.DefaultFunctions.square;
 

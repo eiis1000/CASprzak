@@ -17,7 +17,7 @@ public class Space {
 	public final int dimension;
 	public final TensorInterface metric;
 	public final TensorInterface inverseMetric;
-	public final DirectedNestedArrayInterface<?, GeneralFunction> christoffel;
+	public final DirectedNested<?, GeneralFunction> christoffel;
 
 	public Space(String[] variableStrings, TensorInterface metric, TensorInterface inverseMetric) {
 		this.variableStrings = variableStrings;
@@ -31,7 +31,7 @@ public class Space {
 		return new Partial(index, operand);
 	}
 
-	private DirectedNestedArrayInterface<?, GeneralFunction> calculateChristoffel() {
+	private DirectedNested<?, GeneralFunction> calculateChristoffel() {
 		return createFrom(
 				List.of("\\mu", "\\sigma", "\\nu"),
 				new boolean[]{false, true, false},

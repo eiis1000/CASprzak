@@ -1,19 +1,18 @@
 package tensors3;
 
 import functions.GeneralFunction;
-import tensors3.elementoperations.ElementWrapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Tensor extends DirectedNestedArray<TensorInterface, GeneralFunction> implements TensorInterface {
+public class ArrayTensor extends DirectedNestedArray<TensorInterface, GeneralFunction> implements TensorInterface {
 
 	@SuppressWarnings("unchecked")
-	public static TensorInterface tensor(DirectedNestedArrayInterface<?, GeneralFunction> directedNestedArray) {
+	public static TensorInterface tensor(DirectedNested<?, GeneralFunction> directedNestedArray) {
 		if (directedNestedArray instanceof DirectedEndpoint)
 			return new TensorEndpoint(((DirectedEndpoint<?, GeneralFunction>) directedNestedArray).contained);
 		else if (directedNestedArray.getElements().get(0) instanceof DirectedEndpoint)
-			return new Tensor(
+			return new ArrayTensor(
 					directedNestedArray.getDirection(),
 					directedNestedArray.getElements().stream()
 							.map(e -> (DirectedEndpoint<?, GeneralFunction>) e)
@@ -21,15 +20,15 @@ public class Tensor extends DirectedNestedArray<TensorInterface, GeneralFunction
 							.collect(Collectors.toList())
 			);
 		else
-			return new Tensor(
+			return new ArrayTensor(
 					directedNestedArray.getDirection(),
 					directedNestedArray.getElements().stream()
-							.map(Tensor::tensor)
+							.map(ArrayTensor::tensor)
 							.collect(Collectors.toList())
 			);
 	}
 
-	public static TensorInterface tensor(NestedArrayInterface<?, GeneralFunction> nestedArray, boolean... directions) {
+	public static TensorInterface tensor(Nested<?, GeneralFunction> nestedArray, boolean... directions) {
 		return tensor(direct(nestedArray, directions));
 	}
 
@@ -37,7 +36,7 @@ public class Tensor extends DirectedNestedArray<TensorInterface, GeneralFunction
 		return tensor(direct(nest(elements), directions));
 	}
 
-	protected Tensor(boolean isUpper, List<TensorInterface> elements) {
+	protected ArrayTensor(boolean isUpper, List<TensorInterface> elements) {
 		super(isUpper, elements);
 	}
 

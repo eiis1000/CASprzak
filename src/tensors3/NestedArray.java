@@ -5,7 +5,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements NestedArrayInterface<I, T> {
+public class NestedArray<I extends Nested<I, T>, T> implements Nested<I, T> {
 
 	public static int indexOffset = 0;
 	public static boolean assertValidity = true;
@@ -16,7 +16,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 
 
 	@SuppressWarnings({"unchecked"})
-	public static <I extends NestedArrayInterface<I, T>, T> NestedArray<I, T> nest(Object[] elements) {
+	public static <I extends Nested<I, T>, T> NestedArray<I, T> nest(Object[] elements) {
 		if (elements[0] instanceof Object[])
 			return new NestedArray<>(
 					Arrays.stream(elements)
@@ -32,7 +32,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <I extends NestedArrayInterface<I, T>, T> NestedArrayInterface<I, T> createSquare(int rank, int dimension, T fill) { // TODO rename or access?
+	public static <I extends Nested<I, T>, T> Nested<I, T> createSquare(int rank, int dimension, T fill) { 
 		if (rank == 0)
 			return new NestedEndpoint<>(fill);
 		else
@@ -102,7 +102,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	}
 
 
-	public boolean matches(NestedArrayInterface<I, T> other) {
+	public boolean matches(Nested<I, T> other) {
 		return elements.size() == other.getElements().size();
 	}
 
@@ -113,8 +113,8 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 
 
 	@SuppressWarnings("unchecked")
-	public NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier,
-												 UnaryOperator<T> endpointModifier) {
+	public Nested<I, T> modifyWith(UnaryOperator<I> elementModifier,
+								   UnaryOperator<T> endpointModifier) {
 		return new NestedArray<>(
 				elements.stream()
 						.map(e -> (I) e.modifyWith(elementModifier, endpointModifier))
@@ -129,7 +129,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	}
 
 
-	public static class NestedEndpoint<I extends NestedArrayInterface<I, T>, T> implements NestedArrayInterface<I, T> {
+	public static class NestedEndpoint<I extends Nested<I, T>, T> implements Nested<I, T> {
 
 		protected T contained;
 
@@ -143,7 +143,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 		}
 
 		@Override
-		public boolean matches(NestedArrayInterface<I, T> other) {
+		public boolean matches(Nested<I, T> other) {
 			return other instanceof NestedEndpoint;
 		}
 
@@ -153,7 +153,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 		}
 
 		@Override
-		public NestedArrayInterface<I, T> modifyWith(UnaryOperator<I> elementModifier, UnaryOperator<T> endpointModifier) {
+		public Nested<I, T> modifyWith(UnaryOperator<I> elementModifier, UnaryOperator<T> endpointModifier) {
 			return new NestedEndpoint<>(endpointModifier.apply(contained));
 		}
 

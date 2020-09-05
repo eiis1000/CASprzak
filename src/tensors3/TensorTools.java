@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class TensorTools {
 
-	public static DirectedNestedArrayInterface<?, GeneralFunction> createFrom(List<String> freeIndices, boolean[] directions, int dimension, ElementAccessor formula) {
-		NestedArrayInterface<?, GeneralFunction> array = NestedArray.createSquare(freeIndices.size(), dimension, null);
+	public static DirectedNested<?, GeneralFunction> createFrom(List<String> freeIndices, boolean[] directions, int dimension, ElementAccessor formula) {
+		Nested<?, GeneralFunction> array = NestedArray.createSquare(freeIndices.size(), dimension, null);
 		int[] freeValues = new int[freeIndices.size()];
 		Map<String, Integer> indexValues = new HashMap<>();
 		Map<String, GeneralFunction> toSubstitute = new HashMap<>();
@@ -38,7 +38,7 @@ public class TensorTools {
 		return false;
 	}
 
-	public static ElementWrapper indexTensor(DirectedNestedArrayInterface<?, GeneralFunction> toAccess, String... indices) {
+	public static ElementWrapper indexTensor(DirectedNested<?, GeneralFunction> toAccess, String... indices) {
 		return new ElementWrapper(toAccess, indices);
 	}
 

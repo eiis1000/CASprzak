@@ -1,7 +1,7 @@
 package tensors3.elementoperations;
 
 import functions.GeneralFunction;
-import tensors3.DirectedNestedArrayInterface;
+import tensors3.DirectedNested;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,10 +10,10 @@ import java.util.Set;
 
 public class ElementWrapper implements ElementAccessor {
 
-	private final DirectedNestedArrayInterface<?, GeneralFunction> contained;
+	private final DirectedNested<?, GeneralFunction> contained;
 	private final String[] indices;
 
-	public ElementWrapper(DirectedNestedArrayInterface<?, GeneralFunction> contained, String... indices) {
+	public ElementWrapper(DirectedNested<?, GeneralFunction> contained, String... indices) {
 		this.contained = contained;
 		this.indices = indices;
 	}
