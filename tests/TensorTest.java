@@ -45,7 +45,7 @@ public class TensorTest {
 
 	@Test
 	void tensorTest() {
-		TensorInterface test = ArrayTensor.tensor(
+		Tensor test = ArrayTensor.tensor(
 				new Object[][]{
 						{ONE, TWO},
 						{new Constant(3), new Product(TWO, E)}
@@ -59,22 +59,22 @@ public class TensorTest {
 						{ONE, ONE},
 						{ONE, TWO}
 				}), new boolean[]{true, false});
-		TensorInterface test2 = ArrayTensor.tensor(test2d);
-//		TensorInterface sum = ArrayTensor.sum(test, test2);
+		Tensor test2 = ArrayTensor.tensor(test2d);
+//		Tensor sum = ArrayTensor.sum(test, test2);
 //		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
 //		System.out.println(sum);
 	}
 
 	@Test
 	void elementTest() {
-		TensorInterface id2u = ArrayTensor.tensor(
+		Tensor id2u = ArrayTensor.tensor(
 				new Object[][]{
 						{ZERO, ONE},
 						{ONE, ZERO}
 				},
 				false, false
 		);
-		TensorInterface id2d = ArrayTensor.tensor(
+		Tensor id2d = ArrayTensor.tensor(
 				new Object[][]{
 						{ZERO, ONE},
 						{ONE, ZERO}
@@ -88,14 +88,14 @@ public class TensorTest {
 
 	@Test
 	void scalarTest1() {
-		TensorInterface C = ArrayTensor.tensor(
+		Tensor C = ArrayTensor.tensor(
 				new Object[]{
 						ONE,
 						TWO
 				},
 				true
 		);
-		TensorInterface R = ArrayTensor.tensor(
+		Tensor R = ArrayTensor.tensor(
 				new Object[]{
 						TEN, ONE
 				},
@@ -108,13 +108,13 @@ public class TensorTest {
 
 	@Test
 	void scalarTest2() {
-		TensorInterface C = ArrayTensor.tensor(
+		Tensor C = ArrayTensor.tensor(
 				new Object[]{
 						TEN, ONE
 				},
 				true
 		);
-		TensorInterface metric = ArrayTensor.tensor(
+		Tensor metric = ArrayTensor.tensor(
 				new Object[][]{
 						{NEGATIVE_ONE, ZERO},
 						{ZERO, ONE}

@@ -32,7 +32,7 @@ public class NestedArray<I extends Nested<I, T>, T> implements Nested<I, T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <I extends Nested<I, T>, T> Nested<I, T> createSquare(int rank, int dimension, T fill) { 
+	public static <I extends Nested<I, T>, T> Nested<I, T> createSquare(int rank, int dimension, T fill) {
 		if (rank == 0)
 			return new NestedEndpoint<>(fill);
 		else

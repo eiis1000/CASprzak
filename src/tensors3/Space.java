@@ -15,11 +15,11 @@ public class Space {
 
 	protected final String[] variableStrings;
 	public final int dimension;
-	public final TensorInterface metric;
-	public final TensorInterface inverseMetric;
+	public final Tensor metric;
+	public final Tensor inverseMetric;
 	public final DirectedNested<?, GeneralFunction> christoffel;
 
-	public Space(String[] variableStrings, TensorInterface metric, TensorInterface inverseMetric) {
+	public Space(String[] variableStrings, Tensor metric, Tensor inverseMetric) {
 		this.variableStrings = variableStrings;
 		this.dimension = variableStrings.length;
 		this.metric = metric;

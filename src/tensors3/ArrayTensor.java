@@ -5,10 +5,10 @@ import functions.GeneralFunction;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ArrayTensor extends DirectedNestedArray<TensorInterface, GeneralFunction> implements TensorInterface {
+public class ArrayTensor extends DirectedNestedArray<Tensor, GeneralFunction> implements Tensor {
 
 	@SuppressWarnings("unchecked")
-	public static TensorInterface tensor(DirectedNested<?, GeneralFunction> directedNestedArray) {
+	public static Tensor tensor(DirectedNested<?, GeneralFunction> directedNestedArray) {
 		if (directedNestedArray instanceof DirectedEndpoint)
 			return new TensorEndpoint(((DirectedEndpoint<?, GeneralFunction>) directedNestedArray).contained);
 		else if (directedNestedArray.getElements().get(0) instanceof DirectedEndpoint)
@@ -28,15 +28,15 @@ public class ArrayTensor extends DirectedNestedArray<TensorInterface, GeneralFun
 			);
 	}
 
-	public static TensorInterface tensor(Nested<?, GeneralFunction> nestedArray, boolean... directions) {
+	public static Tensor tensor(Nested<?, GeneralFunction> nestedArray, boolean... directions) {
 		return tensor(direct(nestedArray, directions));
 	}
 
-	public static TensorInterface tensor(Object[] elements, boolean... directions) {
+	public static Tensor tensor(Object[] elements, boolean... directions) {
 		return tensor(direct(nest(elements), directions));
 	}
 
-	protected ArrayTensor(boolean isUpper, List<TensorInterface> elements) {
+	protected ArrayTensor(boolean isUpper, List<Tensor> elements) {
 		super(isUpper, elements);
 	}
 
@@ -47,7 +47,7 @@ public class ArrayTensor extends DirectedNestedArray<TensorInterface, GeneralFun
 	}
 
 
-	public static class TensorEndpoint extends DirectedEndpoint<TensorInterface, GeneralFunction> implements TensorInterface {
+	public static class TensorEndpoint extends DirectedEndpoint<Tensor, GeneralFunction> implements Tensor {
 		public TensorEndpoint(GeneralFunction contained) {
 			super(contained);
 		}
