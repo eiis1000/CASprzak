@@ -63,4 +63,8 @@ public class TensorTools {
 		return current;
 	}
 
+	public static ElementAccessor negative(ElementAccessor elementAccessor) {
+		return new ElementProduct(wrap(DefaultFunctions.NEGATIVE_ONE), elementAccessor);
+	}
+
 }

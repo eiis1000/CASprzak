@@ -141,7 +141,7 @@ public class TensorTest {
 						sum(
 								space.partial("\\mu", space.metric.index("\\nu", "\\rho")),
 								space.partial("\\nu", space.metric.index("\\rho", "\\mu")),
-								space.partial("\\rho", space.metric.index("\\mu", "\\nu"))
+								negative(space.partial("\\rho", space.metric.index("\\mu", "\\nu")))
 						)
 					)
 		);
