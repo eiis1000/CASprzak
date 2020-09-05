@@ -85,4 +85,44 @@ public class TensorTest {
 				new ElementProduct(new TContainer(id2u, "a", "m"), new TContainer(id2d, "m", "b"))
 				));
 	}
+
+	@Test
+	void scalarTest1() {
+		Tensor C = Tensor.tensor(
+				new Object[]{
+						ONE,
+						TWO
+				},
+				true
+		);
+		Tensor R = Tensor.tensor(
+				new Object[]{
+						TEN, ONE
+				},
+				false
+		);
+		System.out.println(EIT.tFE(List.of(), new boolean[]{}, 2,
+				new ElementProduct(new TContainer(R, "\\mu"), new TContainer(C, "\\mu"))
+		));
+	}
+
+	@Test
+	void scalarTest2() {
+		Tensor C = Tensor.tensor(
+				new Object[]{
+						TEN, ONE
+				},
+				true
+		);
+		Tensor metric = Tensor.tensor(
+				new Object[][]{
+						{NEGATIVE_ONE, ZERO},
+						{ZERO, ONE}
+				},
+				false, false
+		);
+		System.out.println(EIT.tFE(List.of("\\nu"), new boolean[]{false}, 2,
+				new ElementProduct(new TContainer(C, "\\mu"), new TContainer(metric, "\\mu", "\\nu"))
+		));
+	}
 }
