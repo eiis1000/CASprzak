@@ -43,7 +43,7 @@ public class ElementProduct implements ElementAccessor {
 			}
 		}
 
-		return new Sum(
+		return new Product(
 				first.getValueAt(indexValues, toSubstitute, dimension),
 				second.getValueAt(indexValues, toSubstitute, dimension)
 		);
