@@ -1,7 +1,7 @@
-package tensors3;
+package tensors;
 
 import functions.GeneralFunction;
-import tensors3.elementoperations.ElementWrapper;
+import tensors.elementoperations.ElementWrapper;
 
 public interface Tensor extends DirectedNested<Tensor, GeneralFunction> {
 

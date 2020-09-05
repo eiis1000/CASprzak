@@ -1,4 +1,4 @@
-package tensors3;
+package tensors;
 
 public interface DirectedNested<I extends DirectedNested<I, T>, T> extends Nested<I, T> {
 

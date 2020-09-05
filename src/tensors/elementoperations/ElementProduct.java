@@ -1,4 +1,4 @@
-package tensors3.elementoperations;
+package tensors.elementoperations;
 
 import functions.GeneralFunction;
 import functions.commutative.Product;

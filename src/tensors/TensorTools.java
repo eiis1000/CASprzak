@@ -1,8 +1,8 @@
-package tensors3;
+package tensors;
 
 import functions.GeneralFunction;
 import functions.endpoint.Constant;
-import tensors3.elementoperations.*;
+import tensors.elementoperations.*;
 import tools.DefaultFunctions;
 
 import java.util.HashMap;

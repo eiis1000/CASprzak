@@ -1,15 +1,15 @@
-package tensors2;
+package tensors;
 
 import java.util.Iterator;
 import java.util.function.BiFunction;
 
-public class OldZip<A, B, T> implements Iterator<T> {
+public class Zip<A, B, T> implements Iterator<T> {
 
 	protected Iterator<A> first;
 	protected Iterator<B> second;
 	protected BiFunction<A, B, T> combiner;
 
-	public OldZip(Iterator<A> first, Iterator<B> second, BiFunction<A, B, T> combiner) {
+	public Zip(Iterator<A> first, Iterator<B> second, BiFunction<A, B, T> combiner) {
 		this.first = first;
 		this.second = second;
 		this.combiner = combiner;

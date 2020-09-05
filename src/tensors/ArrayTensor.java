@@ -1,4 +1,4 @@
-package tensors3;
+package tensors;
 
 import functions.GeneralFunction;
 

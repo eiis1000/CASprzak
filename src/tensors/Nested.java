@@ -1,4 +1,4 @@
-package tensors3;
+package tensors;
 
 import java.util.List;
 import java.util.function.UnaryOperator;

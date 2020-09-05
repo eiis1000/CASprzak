@@ -2,16 +2,16 @@ import functions.GeneralFunction;
 import functions.commutative.Product;
 import functions.endpoint.Constant;
 import org.junit.jupiter.api.Test;
-import tensors3.*;
-import tensors3.ArrayTensor;
-import tensors3.elementoperations.ElementProduct;
-import tensors3.elementoperations.ElementWrapper;
+import tensors.*;
+import tensors.ArrayTensor;
+import tensors.elementoperations.ElementProduct;
+import tensors.elementoperations.ElementWrapper;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static tensors3.TensorTools.*;
+import static tensors.TensorTools.*;
 import static tools.DefaultFunctions.*;
 
 public class TensorTest {

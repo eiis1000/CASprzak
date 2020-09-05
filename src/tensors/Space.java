@@ -1,14 +1,14 @@
-package tensors3;
+package tensors;
 
 import functions.GeneralFunction;
 import functions.commutative.Sum;
 import functions.endpoint.Constant;
 import functions.unitary.transforms.PartialDerivative;
-import tensors3.elementoperations.ElementAccessor;
+import tensors.elementoperations.ElementAccessor;
 
 import java.util.*;
 
-import static tensors3.TensorTools.*;
+import static tensors.TensorTools.*;
 import static tools.DefaultFunctions.HALF;
 
 public class Space {

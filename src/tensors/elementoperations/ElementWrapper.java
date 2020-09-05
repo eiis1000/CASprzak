@@ -1,7 +1,7 @@
-package tensors3.elementoperations;
+package tensors.elementoperations;
 
 import functions.GeneralFunction;
-import tensors3.DirectedNested;
+import tensors.DirectedNested;
 
 import java.util.Arrays;
 import java.util.List;
