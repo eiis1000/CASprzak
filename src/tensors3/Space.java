@@ -1,14 +1,11 @@
 package tensors3;
 
 import functions.GeneralFunction;
-import functions.commutative.Product;
 import functions.commutative.Sum;
 import functions.endpoint.Constant;
-import functions.endpoint.Variable;
 import functions.unitary.transforms.PartialDerivative;
 import tensors3.elementoperations.ElementAccessor;
 
-import java.io.LineNumberReader;
 import java.util.*;
 
 public class Space {
@@ -30,17 +27,19 @@ public class Space {
 		this(dimension, null, null, variableStrings); // TODO this is null, fix that
 	}
 
+	public Partial partial(String index, ElementAccessor operand) {
+		return new Partial(index, operand);
+	}
 
-	class Partial implements ElementAccessor {
+	public class Partial implements ElementAccessor {
 
 		public final ElementAccessor operand;
 		public final String index;
 
-		public Partial(ElementAccessor operand, String index) {
+		public Partial(String index, ElementAccessor operand) {
 			this.operand = operand;
 			this.index = index;
 		}
-
 
 		@Override
 		public GeneralFunction getValueAt(Map<String, Integer> indexValues, Map<String, GeneralFunction> toSubstitute, int dimension) {
