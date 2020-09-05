@@ -7,44 +7,26 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
-public class ElementSum implements EIT {
+public class ElementSum implements ElementAccessor {
 
-	private final EIT[] elements;
+	private final ElementAccessor[] elements;
 
-	public ElementSum(EIT... elements) {
+	public ElementSum(ElementAccessor... elements) {
 		this.elements = elements;
 	}
 
-//	@Override
-//	public GeneralFunction fN(List<String> freeIndices) {
-//		return new Sum(
-//				Arrays.stream(elements)
-//						.map(e -> e.fN(freeIndices))
-//						.toArray(GeneralFunction[]::new)
-//		);
-//	}
-//
-//	@Override
-//	public EIT aN(List<String> boundIndices, List<Integer> values) {
-//		return new ElementSum(
-//				Arrays.stream(elements)
-//						.map(e -> e.aN(boundIndices, values))
-//						.toArray(EIT[]::new)
-//		);
-//	}
-
 	@Override
-	public GeneralFunction s(Map<String, Integer> indexValues, Map<String, GeneralFunction> toSubstitute, int dimension) {
+	public GeneralFunction getValueAt(Map<String, Integer> indexValues, Map<String, GeneralFunction> toSubstitute, int dimension) {
 		return new Sum(
 				Arrays.stream(elements)
-						.map(e -> e.s(indexValues, toSubstitute, dimension))
+						.map(e -> e.getValueAt(indexValues, toSubstitute, dimension))
 						.toArray(GeneralFunction[]::new)
 		);
 	}
 
-	public void gAI(Set<String> set) {
-		for (EIT e : elements)
-			e.gAI(set);
+	public void getIndices(Set<String> set) {
+		for (ElementAccessor e : elements)
+			e.getIndices(set);
 	}
 
 }

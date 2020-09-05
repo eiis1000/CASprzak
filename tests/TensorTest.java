@@ -4,9 +4,9 @@ import functions.endpoint.Constant;
 import org.junit.jupiter.api.Test;
 import tensors3.*;
 import tensors3.Tensor;
-import tensors3.elementoperations.EIT;
 import tensors3.elementoperations.ElementProduct;
-import tensors3.elementoperations.TContainer;
+import tensors3.TensorTools;
+import tensors3.elementoperations.ElementWrapper;
 
 import java.util.List;
 
@@ -81,8 +81,8 @@ public class TensorTest {
 				},
 				true, true
 		);
-		System.out.println(EIT.tFE(List.of("a", "b"), new boolean[]{true, false}, 2,
-				new ElementProduct(new TContainer(id2u, "a", "m"), new TContainer(id2d, "m", "b"))
+		System.out.println(TensorTools.createFrom(List.of("a", "b"), new boolean[]{true, false}, 2,
+				new ElementProduct(new ElementWrapper(id2u, "a", "m"), new ElementWrapper(id2d, "m", "b"))
 				));
 	}
 
@@ -101,8 +101,8 @@ public class TensorTest {
 				},
 				false
 		);
-		System.out.println(EIT.tFE(List.of(), new boolean[]{}, 2,
-				new ElementProduct(new TContainer(R, "\\mu"), new TContainer(C, "\\mu"))
+		System.out.println(TensorTools.createFrom(List.of(), new boolean[]{}, 2,
+				new ElementProduct(new ElementWrapper(R, "\\mu"), new ElementWrapper(C, "\\mu"))
 		));
 	}
 
@@ -121,8 +121,8 @@ public class TensorTest {
 				},
 				false, false
 		);
-		System.out.println(EIT.tFE(List.of("\\nu"), new boolean[]{false}, 2,
-				new ElementProduct(new TContainer(C, "\\mu"), new TContainer(metric, "\\mu", "\\nu"))
+		System.out.println(TensorTools.createFrom(List.of("\\nu"), new boolean[]{false}, 2,
+				new ElementProduct(new ElementWrapper(C, "\\mu"), new ElementWrapper(metric, "\\mu", "\\nu"))
 		));
 	}
 }

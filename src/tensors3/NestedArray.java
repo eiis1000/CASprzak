@@ -1,7 +1,5 @@
 package tensors3;
 
-import functions.GeneralFunction;
-
 import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -34,13 +32,13 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <I extends NestedArrayInterface<I, T>, T> NestedArrayInterface<I, T> aaa(int rank, int dimension, T fill) { // TODO rename or access?
+	public static <I extends NestedArrayInterface<I, T>, T> NestedArrayInterface<I, T> createSquare(int rank, int dimension, T fill) { // TODO rename or access?
 		if (rank == 0)
 			return new NestedEndpoint<>(fill);
 		else
 			return new NestedArray<>(
 					IntStream.range(0, dimension)
-							.mapToObj(t -> (I) aaa(rank - 1, dimension, fill))
+							.mapToObj(t -> (I) createSquare(rank - 1, dimension, fill))
 							.collect(Collectors.toList())
 			);
 	}
@@ -79,17 +77,13 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 
 
 	@Override
-	public T getAtIndex(int... index) {
-//		if (index.length != rank) // TODO should this be commented out?
-//			throw new IllegalArgumentException("Length of index array " + index.length + " does not match rank  " + rank + " of tensor during indexing.");
+	public T getAtIndex(int... index) { // maybe there should be a check both here and below for length
 		return elements.get(index[index.length - rank] + indexOffset).getAtIndex(index);
 	}
 
 
 	@Override
 	public void setAtIndex(T toSet, int... index) {
-//		if (index.length != rank) // TODO should this be commented out?
-//			throw new IllegalArgumentException("Length of index array " + index.length + " does not match rank  " + rank + " of tensor during indexing.");
 		elements.get(index[index.length - rank] + indexOffset).setAtIndex(toSet, index);
 	}
 

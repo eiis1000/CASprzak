@@ -8,27 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class TContainer implements EIT {
+public class ElementWrapper implements ElementAccessor {
 
 	private final DirectedNestedArrayInterface<?, GeneralFunction> contained;
 	private final String[] indices;
 
-	public TContainer(DirectedNestedArrayInterface<?, GeneralFunction> contained, String... indices) {
+	public ElementWrapper(DirectedNestedArrayInterface<?, GeneralFunction> contained, String... indices) {
 		this.contained = contained;
 		this.indices = indices;
 	}
 
-//	@Override
-//	public GeneralFunction fN(List<String> freeIndices) {
-//		return null;
-//	}
-//
-//	@Override
-//	public EIT aN(List<String> boundIndices, List<Integer> values) {
-//		return null;
-//	}
-
-	public GeneralFunction s(Map<String, Integer> indexValues, Map<String, GeneralFunction> toSubstitute, int dimension) {
+	public GeneralFunction getValueAt(Map<String, Integer> indexValues, Map<String, GeneralFunction> toSubstitute, int dimension) {
 
 		int[] index = Arrays.stream(indices)
 				.map(indexValues::get)
@@ -37,7 +27,7 @@ public class TContainer implements EIT {
 		return contained.getAtIndex(index);
 	}
 
-	public void gAI(Set<String> set) {
+	public void getIndices(Set<String> set) {
 		set.addAll(List.of(indices));
 	}
 
