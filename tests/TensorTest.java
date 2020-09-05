@@ -45,7 +45,7 @@ public class TensorTest {
 
 	@Test
 	void tensorTest() {
-		Tensor test = Tensor.tensor(
+		TensorInterface test = Tensor.tensor(
 				new Object[][]{
 						{ONE, TWO},
 						{new Constant(3), new Product(TWO, E)}
@@ -54,12 +54,12 @@ public class TensorTest {
 		System.out.println(test);
 		assertEquals(TWO, test.getAtIndex(0, 1));
 		assertTrue(test.getDirection());
-		DirectedNestedArray<?, GeneralFunction> test2d = DirectedNestedArray.direct(NestedArray.nest(
+		DirectedNestedArrayInterface<?, GeneralFunction> test2d = DirectedNestedArray.direct(NestedArray.nest(
 				new Object[][]{
 						{ONE, ONE},
 						{ONE, TWO}
 				}), new boolean[]{true, false});
-		Tensor test2 = Tensor.tensor(test2d);
+		TensorInterface test2 = Tensor.tensor(test2d);
 //		TensorInterface sum = Tensor.sum(test, test2);
 //		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
 //		System.out.println(sum);
@@ -67,14 +67,14 @@ public class TensorTest {
 
 	@Test
 	void elementTest() {
-		Tensor id2u = Tensor.tensor(
+		TensorInterface id2u = Tensor.tensor(
 				new Object[][]{
 						{ZERO, ONE},
 						{ONE, ZERO}
 				},
 				false, false
 		);
-		Tensor id2d = Tensor.tensor(
+		TensorInterface id2d = Tensor.tensor(
 				new Object[][]{
 						{ZERO, ONE},
 						{ONE, ZERO}
@@ -88,14 +88,14 @@ public class TensorTest {
 
 	@Test
 	void scalarTest1() {
-		Tensor C = Tensor.tensor(
+		TensorInterface C = Tensor.tensor(
 				new Object[]{
 						ONE,
 						TWO
 				},
 				true
 		);
-		Tensor R = Tensor.tensor(
+		TensorInterface R = Tensor.tensor(
 				new Object[]{
 						TEN, ONE
 				},
@@ -108,13 +108,13 @@ public class TensorTest {
 
 	@Test
 	void scalarTest2() {
-		Tensor C = Tensor.tensor(
+		TensorInterface C = Tensor.tensor(
 				new Object[]{
 						TEN, ONE
 				},
 				true
 		);
-		Tensor metric = Tensor.tensor(
+		TensorInterface metric = Tensor.tensor(
 				new Object[][]{
 						{NEGATIVE_ONE, ZERO},
 						{ZERO, ONE}

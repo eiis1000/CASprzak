@@ -2,6 +2,7 @@ package tensors3;
 
 import functions.GeneralFunction;
 import functions.commutative.Sum;
+import tensors3.elementoperations.GFContainer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,8 +12,10 @@ import java.util.stream.Collectors;
 public class Tensor extends DirectedNestedArray<TensorInterface, GeneralFunction> implements TensorInterface {
 
 	@SuppressWarnings("unchecked")
-	public static Tensor tensor(DirectedNestedArrayInterface<?, GeneralFunction> directedNestedArray) {
-		if (directedNestedArray.getElements().get(0) instanceof DirectedEndpoint)
+	public static TensorInterface tensor(DirectedNestedArrayInterface<?, GeneralFunction> directedNestedArray) {
+		if (directedNestedArray instanceof DirectedEndpoint)
+			return new TensorEndpoint(((DirectedEndpoint<?, GeneralFunction>) directedNestedArray).contained);
+		else if (directedNestedArray.getElements().get(0) instanceof DirectedEndpoint)
 			return new Tensor(
 					directedNestedArray.getDirection(),
 					directedNestedArray.getElements().stream()
@@ -29,11 +32,11 @@ public class Tensor extends DirectedNestedArray<TensorInterface, GeneralFunction
 			);
 	}
 
-	public static Tensor tensor(NestedArrayInterface<?, GeneralFunction> nestedArray, boolean... directions) {
+	public static TensorInterface tensor(NestedArrayInterface<?, GeneralFunction> nestedArray, boolean... directions) {
 		return tensor(direct(nestedArray, directions));
 	}
 
-	public static Tensor tensor(Object[] elements, boolean... directions) {
+	public static TensorInterface tensor(Object[] elements, boolean... directions) {
 		return tensor(direct(nest(elements), directions));
 	}
 
