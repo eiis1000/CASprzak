@@ -1,11 +1,11 @@
 package tensors3;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import functions.GeneralFunction;
+
+import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements NestedArrayInterface<I, T> {
 
@@ -29,6 +29,18 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 			return new NestedArray<>(
 					Arrays.stream(elements)
 							.map(e -> (I) new NestedEndpoint<>((T) e))
+							.collect(Collectors.toList())
+			);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <I extends NestedArrayInterface<I, T>, T> NestedArrayInterface<I, T> aaa(int rank, int dimension, T fill) { // TODO rename or access?
+		if (rank == 0)
+			return new NestedEndpoint<>(fill);
+		else
+			return new NestedArray<>(
+					IntStream.range(0, dimension)
+							.mapToObj(t -> (I) aaa(rank - 1, dimension, fill))
 							.collect(Collectors.toList())
 			);
 	}
@@ -168,7 +180,7 @@ public class NestedArray<I extends NestedArrayInterface<I, T>, T> implements Nes
 
 		@Override
 		public String toString() {
-			return contained.toString();
+			return String.valueOf(contained);
 		}
 
 	}

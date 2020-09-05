@@ -4,6 +4,11 @@ import functions.endpoint.Constant;
 import org.junit.jupiter.api.Test;
 import tensors3.*;
 import tensors3.Tensor;
+import tensors3.elementoperations.EIT;
+import tensors3.elementoperations.ElementProduct;
+import tensors3.elementoperations.TContainer;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -55,8 +60,29 @@ public class TensorTest {
 						{ONE, TWO}
 				}), new boolean[]{true, false});
 		Tensor test2 = Tensor.tensor(test2d);
-		TensorInterface sum = Tensor.sum(test, test2);
-		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
-		System.out.println(sum);
+//		TensorInterface sum = Tensor.sum(test, test2);
+//		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
+//		System.out.println(sum);
+	}
+
+	@Test
+	void elementTest() {
+		Tensor id2u = Tensor.tensor(
+				new Object[][]{
+						{ZERO, ONE},
+						{ONE, ZERO}
+				},
+				false, false
+		);
+		Tensor id2d = Tensor.tensor(
+				new Object[][]{
+						{ZERO, ONE},
+						{ONE, ZERO}
+				},
+				true, true
+		);
+		System.out.println(EIT.tFE(List.of("a", "b"), new boolean[]{true, false}, 2,
+				new ElementProduct(new TContainer(id2u, "a", "m"), new TContainer(id2d, "m", "b"))
+				));
 	}
 }
