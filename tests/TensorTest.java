@@ -7,11 +7,13 @@ import tensors3.Tensor;
 import tensors3.elementoperations.ElementProduct;
 import tensors3.TensorTools;
 import tensors3.elementoperations.ElementWrapper;
+import tools.DefaultFunctions;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static tensors3.TensorTools.*;
 import static tools.DefaultFunctions.*;
 
 public class TensorTest {
@@ -81,7 +83,7 @@ public class TensorTest {
 				},
 				true, true
 		);
-		System.out.println(TensorTools.createFrom(List.of("a", "b"), new boolean[]{true, false}, 2,
+		System.out.println(createFrom(List.of("a", "b"), new boolean[]{true, false}, 2,
 				new ElementProduct(new ElementWrapper(id2u, "a", "m"), new ElementWrapper(id2d, "m", "b"))
 				));
 	}
@@ -101,7 +103,7 @@ public class TensorTest {
 				},
 				false
 		);
-		System.out.println(TensorTools.createFrom(List.of(), new boolean[]{}, 2,
+		System.out.println(createFrom(List.of(), new boolean[]{}, 2,
 				new ElementProduct(new ElementWrapper(R, "\\mu"), new ElementWrapper(C, "\\mu"))
 		));
 	}
@@ -121,8 +123,28 @@ public class TensorTest {
 				},
 				false, false
 		);
-		System.out.println(TensorTools.createFrom(List.of("\\nu"), new boolean[]{false}, 2,
+		System.out.println(createFrom(List.of("\\nu"), new boolean[]{false}, 2,
 				new ElementProduct(new ElementWrapper(C, "\\mu"), new ElementWrapper(metric, "\\mu", "\\nu"))
 		));
+	}
+
+	@Test
+	void christoffel() {
+		Space space = null;
+		DirectedNestedArrayInterface<?, GeneralFunction> christoffelSymbols = createFrom(
+				List.of("\\mu", "\\sigma", "\\nu"),
+				new boolean[]{false, true, false},
+				2,
+				product(
+						wrap(HALF),
+						space.inverseMetric.index("\\sigma", "\\rho"),
+						sum(
+								space.partial("\\mu", space.metric.index("\\nu", "\\rho")),
+								space.partial("\\nu", space.metric.index("\\rho", "\\mu")),
+								space.partial("\\rho", space.metric.index("\\mu", "\\nu"))
+						)
+					)
+		);
+		System.out.println(christoffelSymbols);
 	}
 }
