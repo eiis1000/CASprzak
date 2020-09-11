@@ -21,8 +21,7 @@ public class ElementWrapper implements ElementAccessor {
 	public GeneralFunction getValueAt(Map<String, Integer> indexValues, Map<String, GeneralFunction> toSubstitute, int dimension) {
 
 		int[] index = Arrays.stream(indices)
-				.map(indexValues::get)
-				.mapToInt(i -> i)
+				.mapToInt(indexValues::get)
 				.toArray();
 		return contained.getAtIndex(index);
 	}
