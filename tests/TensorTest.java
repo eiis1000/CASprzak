@@ -1,4 +1,5 @@
 import functions.GeneralFunction;
+import functions.binary.Pow;
 import functions.commutative.Product;
 import functions.endpoint.Constant;
 import functions.endpoint.Variable;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import tensors.*;
 import tensors.ArrayTensor;
 import tensors.elementoperations.ElementProduct;
+import tensors.elementoperations.ElementSum;
 import tensors.elementoperations.ElementWrapper;
 
 import java.util.List;
@@ -68,9 +70,14 @@ public class TensorTest {
 						{ONE, TWO}
 				}), new boolean[]{true, false});
 		Tensor test2 = ArrayTensor.tensor(test2d);
-//		Tensor sum = ArrayTensor.sum(test, test2);
-//		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
-//		System.out.println(sum);
+		DirectedNested<?, ?> sum = TensorTools.createFrom(
+				List.of("a", "b"),
+				new boolean[]{true, false},
+				2,
+				new ElementSum(indexTensor(test, "a", "b"), indexTensor(test2, "a", "b"))
+		);
+		assertEquals(sum.getAtIndex(1, 0), new Constant(4));
+		System.out.println(sum);
 	}
 
 	@Test
@@ -144,9 +151,7 @@ public class TensorTest {
 	void cov1() {
 		Space space = DefaultSpaces.cartesian2d;
 		Tensor tensor = ArrayTensor.tensor(
-				new Object[]{
-						square(new Variable("x")), new Product(TWO, new Variable("y"))
-				},
+				new Object[]{square(new Variable("x")), new Product(TWO, new Variable("y"))},
 				true
 		);
 		assertEquals(space.covariantDerivative("a", tensor, "b"), ArrayTensor.tensor(
@@ -158,6 +163,24 @@ public class TensorTest {
 				)
 		);
 
+	}
+
+	@Test
+	void cov2() {
+		Space space = DefaultSpaces.spherical;
+		Tensor tensor = ArrayTensor.tensor(
+				new Object[]{new Product(new Variable("k"), new Variable("q"), new Pow(NEGATIVE_TWO, new Variable("r"))), ZERO, ZERO},
+				true
+		);
+		Tensor expected = ArrayTensor.tensor(
+				new Object[][]{
+						{new Product(NEGATIVE_TWO, new Variable("k"), new Variable("q"), new Pow(new Constant(-3), new Variable("r"))), ZERO, ZERO},
+						{ZERO, new Product(new Variable("k"), new Variable("q"), new Pow(new Constant(-3), new Variable("r"))), ZERO},
+						{ZERO, ZERO, new Product(new Variable("k"), new Variable("q"), new Pow(new Constant(-3), new Variable("r")))}
+				},
+				false, true
+		);
+		assertEquals(expected, space.covariantDerivative("a", tensor, "b"));
 	}
 
 
