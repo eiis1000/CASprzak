@@ -89,9 +89,9 @@ public class Space {
 			current = tensorIndices[i];
 			currentTensorIndices[i] = dummy;
 			if (oldDirections[i])
-				toAdd[i] = negative(new ElementProduct(new ElementWrapper(tensor, currentTensorIndices.clone()), new ElementWrapper(christoffel, current, dummy, respectTo)));
-			else
 				toAdd[i] = new ElementProduct(new ElementWrapper(tensor, currentTensorIndices.clone()), new ElementWrapper(christoffel, dummy, current, respectTo));
+			else
+				toAdd[i] = negative(new ElementProduct(new ElementWrapper(tensor, currentTensorIndices.clone()), new ElementWrapper(christoffel, current, dummy, respectTo)));
 			currentTensorIndices[i] = current;
 		}
 		toAdd[oldRank] = partial(respectTo, new ElementWrapper(tensor, tensorIndices));
