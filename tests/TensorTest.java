@@ -131,4 +131,7 @@ public class TensorTest {
 		Space space = DefaultSpaces.s2;
 		System.out.println(space.christoffel);
 	}
+
+
+
 }

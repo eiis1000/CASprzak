@@ -1,5 +1,6 @@
 package tensors;
 
+import functions.GeneralFunction;
 import functions.endpoint.Variable;
 import functions.unitary.trig.normal.Sin;
 
@@ -24,14 +25,14 @@ public class DefaultSpaces {
 
     public static final Space cartesian2d = new Space(new String[]{"x", "y"},
             tensor(
-            new Object[][]{
+            new GeneralFunction[][]{
                     {ONE, ZERO},
                     {ZERO, ONE}
             },
             false, false
             ),
             tensor(
-                    new Object[][]{
+                    new GeneralFunction[][]{
                             {ONE, ZERO},
                             {ZERO, ONE}
                     },
@@ -41,14 +42,14 @@ public class DefaultSpaces {
 
     public static final Space s2 = new Space(new String[]{"θ", "φ"},
             tensor(
-                    new Object[][]{
+                    new GeneralFunction[][]{
                             {ONE, ZERO},
                             {ZERO, square(new Sin(θ))}
                     },
                     false, false
             ),
             tensor(
-                    new Object[][]{
+                    new GeneralFunction[][]{
                             {ONE, ZERO},
                             {ZERO, reciprocal(square(new Sin(θ)))}
                     },
