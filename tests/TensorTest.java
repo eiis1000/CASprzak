@@ -1,6 +1,7 @@
 import functions.GeneralFunction;
 import functions.commutative.Product;
 import functions.endpoint.Constant;
+import functions.endpoint.Variable;
 import org.junit.jupiter.api.Test;
 import tensors.*;
 import tensors.ArrayTensor;
@@ -135,6 +136,27 @@ public class TensorTest {
 	void christoffel() {
 		Space space = DefaultSpaces.s2;
 		System.out.println(space.christoffel);
+	}
+
+	@Test
+	void cov1() {
+		System.out.println("testing cov");
+		Space space = DefaultSpaces.cartesian2d;
+		Tensor tensor = ArrayTensor.tensor(
+				new Object[]{
+						square(new Variable("x")), new Product(TWO, new Variable("y"))
+				},
+				true
+		);
+		assertEquals(space.covariantDerivative("a", tensor, "b"), ArrayTensor.tensor(
+				new Object[][]{
+						{new Product(TWO, new Variable("x")), ZERO},
+						{ZERO, TWO}
+				},
+				false, true
+				)
+		);
+
 	}
 
 
