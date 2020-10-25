@@ -4,6 +4,7 @@ import functions.GeneralFunction;
 import functions.commutative.Product;
 import functions.endpoint.Variable;
 import functions.unitary.trig.normal.Sin;
+import tools.DefaultFunctions;
 
 import static tensors.ArrayTensor.*;
 import static tools.DefaultFunctions.*;
@@ -88,5 +89,10 @@ public class DefaultSpaces {
             square(new Product(r, new Sin(θ)))
     );
 
+    private DefaultSpaces(){}
+
+    public static void initialize() {
+        // Method does nothing, and serves to force the JVM to initialize the class
+    }
 
 }
