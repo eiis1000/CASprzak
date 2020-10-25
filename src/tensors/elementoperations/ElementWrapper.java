@@ -19,7 +19,8 @@ public class ElementWrapper implements ElementAccessor {
 	}
 
 	public GeneralFunction getValueAt(Map<String, Integer> indexValues, Map<String, GeneralFunction> toSubstitute, int dimension) {
-
+		if (!indexValues.keySet().containsAll(List.of(indices)))
+			throw new IllegalStateException("Calling getValueAt with incomplete indexValues and/or toSubstitute, has " + indexValues + " but expected values for " + Arrays.toString(indices));
 		int[] index = Arrays.stream(indices)
 				.mapToInt(indexValues::get)
 				.toArray();
