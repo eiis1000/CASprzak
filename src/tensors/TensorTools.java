@@ -71,4 +71,19 @@ public class TensorTools {
 		return new ElementProduct(WRAPPED_NEGATIVE_ONE, elementAccessor);
 	}
 
+	public static boolean isSquare(int[] dimensions) {
+		int dimension = dimensions[0];
+		for (int i = 1; i < dimensions.length; i++)
+			if (dimension != dimensions[i])
+				return false;
+		return true;
+	}
+
+	public static int getDimension(int[] dimensions) {
+		if (isSquare(dimensions))
+			return dimensions[0];
+		else
+			throw new IllegalArgumentException("Cannot get the dimension of a non-square array.");
+	}
+
 }
