@@ -12,6 +12,7 @@ import java.util.Map;
 public class TensorTools {
 
 	public static final GeneralFunctionWrapper WRAPPED_ONE = wrap(DefaultFunctions.ONE);
+	public static final GeneralFunctionWrapper WRAPPED_HALF = wrap(DefaultFunctions.HALF);
 	public static final GeneralFunctionWrapper WRAPPED_NEGATIVE_ONE = wrap(DefaultFunctions.NEGATIVE_ONE);
 
 	public static DirectedNested<?, GeneralFunction> createFrom(List<String> freeIndices, boolean[] directions, int dimension, ElementAccessor formula) {
