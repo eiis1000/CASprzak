@@ -7,9 +7,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tensors.*;
 import tensors.ArrayTensor;
+import tensors.elementoperations.ElementAccessor;
 import tensors.elementoperations.ElementProduct;
 import tensors.elementoperations.ElementSum;
 import tensors.elementoperations.ElementWrapper;
+import tools.ArrayTools;
 
 import java.util.List;
 
@@ -183,6 +185,21 @@ public class TensorTest {
 		assertEquals(expected, space.covariantDerivative("\\mu", tensor, "\\nu"));
 	}
 
-
+	@Test
+	void access1() {
+		Tensor vector = ArrayTensor.tensor(
+				new Object[]{new Product(new Variable("k"), new Variable("q"), new Pow(NEGATIVE_TWO, new Variable("r"))), ZERO, ZERO},
+				true
+		);
+		System.out.println(TensorTools.createFrom(
+				List.of("\\beta", "a"),
+				new boolean[]{false, true},
+				3,
+				new ElementProduct(
+						TensorTools.indexTensor(vector, "\\alpha"),
+						TensorTools.indexTensor(DefaultSpaces.spherical.christoffel, "\\alpha", "a", "\\beta")
+				)
+		));
+	}
 
 }
