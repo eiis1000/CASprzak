@@ -2,6 +2,7 @@ import functions.GeneralFunction;
 import functions.commutative.Product;
 import functions.endpoint.Constant;
 import functions.endpoint.Variable;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tensors.*;
 import tensors.ArrayTensor;
@@ -17,8 +18,9 @@ import static tools.DefaultFunctions.*;
 
 public class TensorTest {
 
-	static {
-		DefaultSpaces.s2.hashCode(); // static initializer to build the class before testing
+	@BeforeAll
+	static void beforeAll() {
+		DefaultSpaces.initialize();
 	}
 
 	@Test
