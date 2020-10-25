@@ -1,6 +1,7 @@
 package tensors;
 
 import functions.GeneralFunction;
+import functions.binary.Pow;
 import functions.commutative.Sum;
 import functions.endpoint.Constant;
 import functions.unitary.transforms.PartialDerivative;
@@ -8,12 +9,13 @@ import tensors.elementoperations.ElementAccessor;
 import tensors.elementoperations.ElementProduct;
 import tensors.elementoperations.ElementSum;
 import tensors.elementoperations.ElementWrapper;
+import tools.DefaultFunctions;
 import tools.exceptions.NotYetImplementedException;
 
 import java.util.*;
 
 import static tensors.TensorTools.*;
-import static tools.DefaultFunctions.HALF;
+import static tools.DefaultFunctions.*;
 
 public class Space {
 
@@ -30,6 +32,27 @@ public class Space {
 		this.inverseMetric = inverseMetric;
 		christoffel = calculateChristoffel();
 	}
+
+	public static Space spaceFromDiagonal(String[] variableStrings, GeneralFunction[] diagonal) {
+		GeneralFunction[][] metric = new GeneralFunction[diagonal.length][diagonal.length];
+		for (GeneralFunction[] row : metric)
+			Arrays.fill(row, ZERO);
+		GeneralFunction[][] inverseMetric = new GeneralFunction[diagonal.length][diagonal.length];
+		for (GeneralFunction[] row : inverseMetric)
+			Arrays.fill(row, ZERO);
+
+		for (int i = 0; i < diagonal.length; i++) {
+			metric[i][i] = diagonal[i];
+			inverseMetric[i][i] = new Pow(NEGATIVE_ONE, diagonal[i]);
+		}
+
+		return new Space(
+				variableStrings,
+				ArrayTensor.tensor(metric, false, false),
+				ArrayTensor.tensor(inverseMetric, true, true)
+		);
+	}
+
 
 	public Partial partial(String index, ElementAccessor operand) {
 		return new Partial(index, operand);
