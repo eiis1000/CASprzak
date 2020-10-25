@@ -6,6 +6,8 @@ import functions.endpoint.Constant;
 import functions.unitary.transforms.PartialDerivative;
 import tensors.elementoperations.ElementAccessor;
 import tensors.elementoperations.ElementProduct;
+import tensors.elementoperations.ElementSum;
+import tensors.elementoperations.ElementWrapper;
 import tools.exceptions.NotYetImplementedException;
 
 import java.util.*;
@@ -52,11 +54,40 @@ public class Space {
 
 	private Tensor covariantDerivative(String respectTo, Tensor tensor, String... tensorIndices) {
 		// TODO assert tensorIndices length matches rank
-		ElementAccessor[] toAdd = new ElementAccessor[tensor.getRank() + 1];
-		for (int i = 0; i < tensor.getRank(); i++) {
-//			ElementAccessor term = new ElementProduct(christoffel) TODO you need to be able to index christoffel
+		// TODO assert alpha is free and can be dummy
+		int oldRank = tensor.getRank();
+		boolean[] oldDirections = tensor.getDirections();
+		ElementAccessor[] toAdd = new ElementAccessor[oldRank + 1];
+
+		String[] currentTensorIndices = tensorIndices.clone();
+		String current;
+		String dummy = "\\alpha";
+		for (int i = 0; i < oldRank; i++) {
+			current = tensorIndices[i];
+			currentTensorIndices[i] = dummy;
+			if (oldDirections[i])
+				toAdd[i] = negative(new ElementProduct(new ElementWrapper(tensor, currentTensorIndices), new ElementWrapper(christoffel, current, dummy, respectTo)));
+			else
+				toAdd[i] = new ElementProduct(new ElementWrapper(tensor, currentTensorIndices), new ElementWrapper(christoffel, dummy, current, respectTo));
+			currentTensorIndices[i] = current;
 		}
-		return null;
+		toAdd[oldRank] = partial(respectTo, new ElementWrapper(tensor, tensorIndices));
+
+		boolean[] newDirections = new boolean[oldRank + 1];
+		newDirections[0] = false;
+		System.arraycopy(oldDirections, 0, newDirections, 1, oldRank);
+
+		List<String> newIndices = new ArrayList<>(List.of(tensorIndices));
+		newIndices.add(0, respectTo);
+
+		return ArrayTensor.tensor(
+				createFrom(
+						newIndices,
+						newDirections,
+						oldRank + 1,
+						new ElementSum(toAdd)
+				)
+		);
 	}
 
 
