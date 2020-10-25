@@ -128,6 +128,14 @@ public class NestedArray<I extends Nested<I, T>, T> implements Nested<I, T> {
 		return elements.toString();
 	}
 
+	@SuppressWarnings("unchecked")
+	public boolean equals(Object other) {
+		return other instanceof Nested<?, ?> nested && equals((Nested<I, T>) nested);
+	}
+
+	public boolean equals(Nested<I, T> other) { // TODO test rigorously with subclasses
+		return matches(other) && elements.equals(other.getElements());
+	}
 
 	public static class NestedEndpoint<I extends Nested<I, T>, T> implements Nested<I, T> {
 
@@ -175,6 +183,10 @@ public class NestedArray<I extends Nested<I, T>, T> implements Nested<I, T> {
 		@Override
 		public String toString() {
 			return String.valueOf(contained);
+		}
+
+		public boolean equals(Object other) {
+			return other instanceof NestedEndpoint<?, ?> endpoint && contained.equals(endpoint.contained);
 		}
 
 	}
