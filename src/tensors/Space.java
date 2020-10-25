@@ -81,6 +81,7 @@ public class Space {
 		int oldRank = tensor.getRank();
 		boolean[] oldDirections = tensor.getDirections();
 		ElementAccessor[] toAdd = new ElementAccessor[oldRank + 1];
+		int dimension = TensorTools.getDimension(tensor.getDimensions());
 
 		String[] currentTensorIndices = tensorIndices.clone();
 		String current;
@@ -107,7 +108,7 @@ public class Space {
 				createFrom(
 						newIndices,
 						newDirections,
-						oldRank + 1,
+						dimension,
 						new ElementSum(toAdd)
 				)
 		);
