@@ -15,6 +15,11 @@ import static tensors.TensorTools.*;
 import static tools.DefaultFunctions.*;
 
 public class TensorTest {
+
+	static {
+		DefaultSpaces.s2.hashCode();
+	}
+
 	@Test
 	void undirectedTest() {
 		NestedArray<?, Integer> test = NestedArray.nest(new Object[][]{
