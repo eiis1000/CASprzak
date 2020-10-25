@@ -23,39 +23,13 @@ public class DefaultSpaces {
     public static final Variable φ = new Variable("φ");
     public static final Variable ψ = new Variable("ψ");
 
-    public static final Space cartesian2d = new Space(new String[]{"x", "y"},
-            tensor(
-            new GeneralFunction[][]{
-                    {ONE, ZERO},
-                    {ZERO, ONE}
-            },
-            false, false
-            ),
-            tensor(
-                    new GeneralFunction[][]{
-                            {ONE, ZERO},
-                            {ZERO, ONE}
-                    },
-                    true, true
-            )
-    );
+    public static final Space cartesian2d = Space.spaceFromDiagonal(new String[]{"x", "y"}, ONE, ONE);
 
-    public static final Space s2 = new Space(new String[]{"θ", "φ"},
-            tensor(
-                    new GeneralFunction[][]{
-                            {ONE, ZERO},
-                            {ZERO, square(new Sin(θ))}
-                    },
-                    false, false
-            ),
-            tensor(
-                    new GeneralFunction[][]{
-                            {ONE, ZERO},
-                            {ZERO, reciprocal(square(new Sin(θ)))}
-                    },
-                    true, true
-            )
-    );
+    public static final Space cartesian3d = Space.spaceFromDiagonal(new String[]{"x", "y", "z"}, ONE, ONE, ONE);
+
+    public static final Space polar = Space.spaceFromDiagonal(new String[]{"r", "θ"}, ONE, square(r));
+
+    public static final Space s2 = Space.spaceFromDiagonal(new String[]{"θ", "φ"}, ONE, reciprocal(square(new Sin(θ))));
 
 
 
