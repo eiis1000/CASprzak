@@ -33,7 +33,7 @@ public class Space {
 		christoffel = calculateChristoffel();
 	}
 
-	public static Space spaceFromDiagonal(String[] variableStrings, GeneralFunction[] diagonal) {
+	public static Space spaceFromDiagonal(String[] variableStrings, GeneralFunction... diagonal) {
 		GeneralFunction[][] metric = new GeneralFunction[diagonal.length][diagonal.length];
 		for (GeneralFunction[] row : metric)
 			Arrays.fill(row, ZERO);
