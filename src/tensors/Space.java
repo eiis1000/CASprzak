@@ -64,7 +64,7 @@ public class Space {
 		return createFrom(
 				List.of("\\mu", "\\sigma", "\\nu"),
 				new boolean[]{false, true, false},
-				2,
+				dimension,
 				product(
 						wrap(HALF),
 						inverseMetric.index("\\sigma", "\\rho"),
