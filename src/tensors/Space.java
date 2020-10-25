@@ -87,7 +87,7 @@ public class Space {
 
 		String[] currentTensorIndices = tensorIndices.clone();
 		String current;
-		String dummy = "\\alpha";
+		String dummy = "\\dmy" + (hashCode() ^ tensor.hashCode() ^ respectTo.hashCode());
 		for (int i = 0; i < oldRank; i++) {
 			current = tensorIndices[i];
 			currentTensorIndices[i] = dummy;
