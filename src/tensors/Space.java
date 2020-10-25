@@ -34,6 +34,8 @@ public class Space {
 	}
 
 	public static Space fromDiagonalMetric(String[] variableStrings, GeneralFunction... diagonal) {
+		if (variableStrings.length != diagonal.length)
+			throw new IllegalArgumentException("variableStrings length " + variableStrings.length + " and diagonal length " + diagonal.length + " do not match.");
 		GeneralFunction[][] metric = new GeneralFunction[diagonal.length][diagonal.length];
 		for (GeneralFunction[] row : metric)
 			Arrays.fill(row, ZERO);
