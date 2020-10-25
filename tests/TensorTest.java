@@ -3,6 +3,8 @@ import functions.binary.Pow;
 import functions.commutative.Product;
 import functions.endpoint.Constant;
 import functions.endpoint.Variable;
+import functions.unitary.trig.normal.Cos;
+import functions.unitary.trig.normal.Sin;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tensors.*;
@@ -183,6 +185,33 @@ public class TensorTest {
 				false, true
 		);
 		assertEquals(expected, space.covariantDerivative("\\mu", tensor, "\\nu"));
+	}
+
+	@Test
+	void cov3() {
+		Space space = DefaultSpaces.cartesian2d;
+		Tensor tensor = ArrayTensor.tensor(
+				new Object[][]{
+						{square(new Variable("x")), new Product(TWO, new Variable("y"))},
+						{ZERO, new Sin(new Variable("x"))}
+				},
+				true, false
+		);
+		assertEquals(space.covariantDerivative("a", tensor, "b", "c"), ArrayTensor.tensor(
+				new Object[][][]{
+						{
+								{new Product(TWO, new Variable("x")), ZERO},
+								{ZERO, new Cos(new Variable("x"))}
+						},
+						{
+								{ZERO, TWO},
+								{ZERO, ZERO}
+						}
+				},
+				false, true, false
+				)
+		);
+
 	}
 
 	@Test
