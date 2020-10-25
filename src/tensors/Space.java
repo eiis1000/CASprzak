@@ -42,8 +42,8 @@ public class Space {
 			Arrays.fill(row, ZERO);
 
 		for (int i = 0; i < diagonal.length; i++) {
-			metric[i][i] = diagonal[i];
-			inverseMetric[i][i] = new Pow(NEGATIVE_ONE, diagonal[i]);
+			metric[i][i] = diagonal[i].simplify();
+			inverseMetric[i][i] = DefaultFunctions.reciprocal(diagonal[i]).simplify();
 		}
 
 		return new Space(
