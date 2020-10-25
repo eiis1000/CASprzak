@@ -180,7 +180,7 @@ public class TensorTest {
 				},
 				false, true
 		);
-		assertEquals(expected, space.covariantDerivative("a", tensor, "b"));
+		assertEquals(expected, space.covariantDerivative("\\mu", tensor, "\\nu"));
 	}
 
 
