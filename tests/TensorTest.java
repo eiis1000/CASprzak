@@ -18,7 +18,7 @@ import static tools.DefaultFunctions.*;
 public class TensorTest {
 
 	static {
-		DefaultSpaces.s2.hashCode();
+		DefaultSpaces.s2.hashCode(); // static initializer to build the class before testing
 	}
 
 	@Test
@@ -140,7 +140,6 @@ public class TensorTest {
 
 	@Test
 	void cov1() {
-		System.out.println("testing cov");
 		Space space = DefaultSpaces.cartesian2d;
 		Tensor tensor = ArrayTensor.tensor(
 				new Object[]{
