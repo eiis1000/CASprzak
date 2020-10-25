@@ -75,7 +75,7 @@ public class Space {
 		);
 	}
 
-	private Tensor covariantDerivative(String respectTo, Tensor tensor, String... tensorIndices) {
+	public Tensor covariantDerivative(String respectTo, Tensor tensor, String... tensorIndices) {
 		// TODO assert tensorIndices length matches rank
 		// TODO assert alpha is free and can be dummy
 		int oldRank = tensor.getRank();
