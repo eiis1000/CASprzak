@@ -11,6 +11,9 @@ import java.util.Map;
 
 public class TensorTools {
 
+	public static final GeneralFunctionWrapper WRAPPED_ONE = wrap(DefaultFunctions.ONE);
+	public static final GeneralFunctionWrapper WRAPPED_NEGATIVE_ONE = wrap(DefaultFunctions.NEGATIVE_ONE);
+
 	public static DirectedNested<?, GeneralFunction> createFrom(List<String> freeIndices, boolean[] directions, int dimension, ElementAccessor formula) {
 		Nested<?, GeneralFunction> array = NestedArray.createSquare(freeIndices.size(), dimension, null);
 		int[] freeValues = new int[freeIndices.size()];
@@ -52,7 +55,7 @@ public class TensorTools {
 
 	public static ElementAccessor product(ElementAccessor... elements) {
 		if (elements.length == 0)
-			return new GeneralFunctionWrapper(DefaultFunctions.ONE);
+			return WRAPPED_ONE;
 		if (elements.length == 1)
 			return elements[0];
 
@@ -64,7 +67,7 @@ public class TensorTools {
 	}
 
 	public static ElementAccessor negative(ElementAccessor elementAccessor) {
-		return new ElementProduct(wrap(DefaultFunctions.NEGATIVE_ONE), elementAccessor);
+		return new ElementProduct(WRAPPED_NEGATIVE_ONE, elementAccessor);
 	}
 
 }
