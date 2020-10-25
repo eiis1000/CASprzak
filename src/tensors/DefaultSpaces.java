@@ -26,56 +26,67 @@ public class DefaultSpaces {
 
     public static final Space cartesian2d = Space.fromDiagonalMetric(new String[]{"x", "y"},
             ONE,
-            ONE);
+            ONE
+    );
 
     public static final Space cartesian3d = Space.fromDiagonalMetric(new String[]{"x", "y", "z"},
             ONE,
             ONE,
-            ONE);
+            ONE
+    );
 
     public static final Space polar = Space.fromDiagonalMetric(new String[]{"r", "θ"},
             ONE,
-            square(r));
+            square(r)
+    );
 
     public static final Space cylindrical = Space.fromDiagonalMetric(new String[]{"r", "θ", "z"},
             ONE,
             square(r),
-            ONE);
+            ONE
+    );
 
     public static final Space spherical = Space.fromDiagonalMetric(new String[]{"r", "θ", "φ"},
             ONE,
             square(r),
-            square(new Product(r, new Sin(θ))));
+            square(new Product(r, new Sin(θ)))
+    );
 
     public static final Space minkowski1d = Space.fromDiagonalMetric(new String[]{"t", "x"},
             NEGATIVE_ONE,
-            ONE);
+            ONE
+    );
 
     public static final Space minkowski2d = Space.fromDiagonalMetric(new String[]{"t", "x", "y"},
             NEGATIVE_ONE,
             ONE,
-            ONE);
+            ONE
+    );
 
     public static final Space minkowski = Space.fromDiagonalMetric(new String[]{"t", "x", "y", "z"},
             NEGATIVE_ONE,
             ONE,
             ONE,
-            ONE);
+            ONE
+    );
 
     public static final Space s2 = Space.fromDiagonalMetric(new String[]{"θ", "φ"},
             ONE,
-            square(new Sin(θ)));
+            square(new Sin(θ))
+    );
 
     public static final Space s3 = Space.fromDiagonalMetric(new String[]{"ψ", "θ", "φ"},
             ONE,
             square(new Sin(ψ)),
-            square(new Product(new Sin(ψ), new Sin(θ))));
+            square(new Product(new Sin(ψ), new Sin(θ)))
+    );
 
     public static final Space schwarzschild = Space.fromDiagonalMetric(new String[]{"t", "r", "θ", "φ"},
             negative(subtract(ONE, new Product(r_s, reciprocal(r)))),
             reciprocal(subtract(ONE, new Product(r_s, reciprocal(r)))),
             square(r),
-            square(new Product(r, new Sin(θ))));
+            square(new Product(r, new Sin(θ)))
+    );
 
 
 }
